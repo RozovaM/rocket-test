@@ -1,4 +1,4 @@
-group 'wap-automated-gui-test'
+group 'rocket-test'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -11,7 +11,7 @@ sourceSets { main { java { include "src/main/java/tests/web/**/.java" } } }
 test {
     useTestNG()
     options.useDefaultListeners = true
-    options.outputDirectory = file("/Users/romansajda/IdeaProjects/wap-gui/target/allure-results")
+    options.outputDirectory = file("${path_to_allure_results}")
 }
 
 buildscript {
@@ -32,8 +32,8 @@ allure {
 
     testNG = true
 
-    allureResultsDir = "/Users/romansajda/IdeaProjects/wap-gui/target/allure-results"
-    allureReportDir = "/Users/romansajda/IdeaProjects/wap-gui/build/reports"
+    allureResultsDir = "${path_to_allure_results}"
+    allureReportDir = "${path_to_allure_reports}"
 
     clean = true
     geb = true
