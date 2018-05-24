@@ -4,6 +4,7 @@ import core.models.Config;
 import core.models.DbPrecondition;
 import core.models.SshClient;
 import core.models.web.Web;
+import core.models.api.Api;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -34,5 +35,12 @@ public class CoreContext {
         ChromeDriverManager.getInstance().setup();
         com.codeborne.selenide.Configuration.browser = "chrome";
         return new Web(config().getPreference().node("Web").get("baseUrl", ""));
+    }
+
+    @Bean
+    public Api api() {
+        //ChromeDriverManager.getInstance().setup();
+        //com.codeborne.selenide.Configuration.browser = "chrome";
+        return new Api(config().getPreference().node("Api").get("baseUrl", ""));
     }
 }
