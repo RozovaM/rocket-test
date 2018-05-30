@@ -1,10 +1,10 @@
-package api.rest.library.services;
+package core.service.api;
 
 import core.models.Config;
-import api.rest.library.builders.DefaultRequestBuilder;
-import api.rest.library.models.HttpRequest;
-import api.rest.library.services.authStringGenerators.BasicAuthStringGenerator;
-import api.rest.library.services.authStringGenerators.OAuth2StringGenerator;
+import core.builders.DefaultRequestBuilder;
+import core.models.api.HttpRequest;
+import core.service.api.authStringGenerators.BasicAuthStringGenerator;
+import core.service.api.authStringGenerators.OAuth2StringGenerator;
 import org.springframework.http.HttpHeaders;
 
 public class CustomizedEndpointService extends EndpointService

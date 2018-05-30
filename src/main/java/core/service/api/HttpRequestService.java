@@ -1,7 +1,7 @@
-package api.rest.library.services;
+package core.service.api;
 
-import api.rest.library.models.HttpRequest;
-import api.rest.library.models.Response;
+import core.models.api.HttpRequest;
+import core.models.api.Response;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;

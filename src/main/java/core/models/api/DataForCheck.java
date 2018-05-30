@@ -1,4 +1,4 @@
-package api.rest.library.models;
+package core.models.api;
 
 import java.util.HashMap;
 
