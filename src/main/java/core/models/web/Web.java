@@ -133,62 +133,62 @@ public class Web {
     }
 
     public WebAssertion waitUntilTextAppearsCss(String css, String text, int milisecondsToWait) {
-        SelenideElement element = $(By.cssSelector(css)).waitUntil(Condition.hasText(text), milisecondsToWait);
+        SelenideElement element = $(By.cssSelector(css)).waitUntil(Condition.text(text), milisecondsToWait);
         return new WebAssertion(element);
     }
 
     public Web waitUntilTextAppearsCssAnd(String css, String text, int milisecondsToWait) {
-        SelenideElement element = $(By.cssSelector(css)).waitUntil(Condition.hasText(text), milisecondsToWait);
+        SelenideElement element = $(By.cssSelector(css)).waitUntil(Condition.text(text), milisecondsToWait);
         return this;
     }
 
     public WebAssertion waitUntilTextAppearsXpath(String xpath, String text, int milisecondsToWait) {
-        SelenideElement element = $(By.xpath(xpath)).waitUntil(Condition.hasText(text), milisecondsToWait);
+        SelenideElement element = $(By.xpath(xpath)).waitUntil(Condition.text(text), milisecondsToWait);
         return new WebAssertion(element);
     }
 
     public Web waitUntilTextAppearsXpathAnd(String xpath, String text, int milisecondsToWait) {
-        SelenideElement element = $(By.xpath(xpath)).waitUntil(Condition.hasText(text), milisecondsToWait);
+        SelenideElement element = $(By.xpath(xpath)).waitUntil(Condition.text(text), milisecondsToWait);
         return this;
     }
 
     public WebAssertion waitUntilAttributeAppearsCss(String css, String attributeName, String attributeValue, int milisecondsToWait) {
-        SelenideElement element = $(By.cssSelector(css)).waitUntil(Condition.hasAttribute(attributeName, attributeValue), milisecondsToWait);
+        SelenideElement element = $(By.cssSelector(css)).waitUntil(Condition.attribute(attributeName, attributeValue), milisecondsToWait);
         return new WebAssertion(element);
     }
 
     public Web waitUntilAttributeAppearsCssAnd(String css, String attributeName, String attributeValue, int milisecondsToWait) {
-        SelenideElement element = $(By.cssSelector(css)).waitUntil(Condition.hasAttribute(attributeName, attributeValue), milisecondsToWait);
+        SelenideElement element = $(By.cssSelector(css)).waitUntil(Condition.attribute(attributeName, attributeValue), milisecondsToWait);
         return this;
     }
 
     public WebAssertion waitUntilAttributeAppearsXpath(String xpath, String attributeName, String attributeValue, int milisecondsToWait) {
-        SelenideElement element = $(By.xpath(xpath)).waitUntil(Condition.hasAttribute(attributeName, attributeValue), milisecondsToWait);
+        SelenideElement element = $(By.xpath(xpath)).waitUntil(Condition.attribute(attributeName, attributeValue), milisecondsToWait);
         return new WebAssertion(element);
     }
 
     public Web waitUntilAttributeAppearsXpathAnd(String xpath, String attributeName, String attributeValue, int milisecondsToWait) {
-        SelenideElement element = $(By.xpath(xpath)).waitUntil(Condition.hasAttribute(attributeName, attributeValue), milisecondsToWait);
+        SelenideElement element = $(By.xpath(xpath)).waitUntil(Condition.attribute(attributeName, attributeValue), milisecondsToWait);
         return this;
     }
 
     public WebAssertion waitUntilElementIsPresentCss(String css, int milisecondsToWait) {
-        SelenideElement element = $(By.cssSelector(css)).waitUntil(Condition.present, milisecondsToWait);
+        SelenideElement element = $(By.cssSelector(css)).waitUntil(Condition.exist, milisecondsToWait);
         return new WebAssertion(element);
     }
 
     public Web waitUntilElementIsPresentCssAnd(String css, int milisecondsToWait) {
-        SelenideElement element = $(By.cssSelector(css)).waitUntil(Condition.present, milisecondsToWait);
+        SelenideElement element = $(By.cssSelector(css)).waitUntil(Condition.exist, milisecondsToWait);
         return this;
     }
 
     public WebAssertion waitUntilElementIsPresentXpath(String xpath, int milisecondsToWait) {
-        SelenideElement element = $(By.xpath(xpath)).waitUntil(Condition.present, milisecondsToWait);
+        SelenideElement element = $(By.xpath(xpath)).waitUntil(Condition.exist, milisecondsToWait);
         return new WebAssertion(element);
     }
 
     public Web waitUntilElementIsPresentXpathAnd(String xpath, int milisecondsToWait) {
-        SelenideElement element = $(By.xpath(xpath)).waitUntil(Condition.present, milisecondsToWait);
+        SelenideElement element = $(By.xpath(xpath)).waitUntil(Condition.exist, milisecondsToWait);
         return this;
     }
 
