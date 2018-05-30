@@ -1,46 +1,49 @@
 package core.service;
 
-import core.CoreContext;
-import core.models.DbPrecondition;
-import core.models.api.Api;
-import io.restassured.RestAssured;
+import core.models.Config;
+import api.rest.library.models.DataForCheck;
+import api.rest.library.services.EndpointService;
+import api.rest.library.services.JsonClient;
+import core.ApiContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import ru.yandex.qatools.allure.annotations.Attachment;
 
-import java.io.IOException;
+import java.math.BigInteger;
+import java.util.Random;
 
-@ContextConfiguration(classes = {CoreContext.class}, loader = AnnotationConfigContextLoader.class)
-public class ApiTest extends AbstractTestNGSpringContextTests {
-    private Api api;
-    private DbPrecondition dbPrecondition;
 
-    @BeforeClass
-    public void setUp() throws Exception {
-        getDbPrecondition().prepareDb();
-    }
-
-    public Api getApi() {
-        return api;
-    }
+@ContextConfiguration(classes = {ApiContext.class}, loader = AnnotationConfigContextLoader.class)
+public class ApiTest extends AbstractTestNGSpringContextTests
+{
+    @Autowired
+    protected EndpointService restApiBasicAuth;
 
     @Autowired
-    public ApiTest setApi(Api api) {
-        this.api = api;
-        return this;
+    protected JsonClient jsonClient;
+
+    public ApiTest()
+    {
+        Config config = new Config("config.ini");
     }
 
-    public DbPrecondition getDbPrecondition() {
-        return dbPrecondition;
+    public DataForCheck<String, String> getDataWithStringValue()
+    {
+        return new DataForCheck<>();
     }
 
-    @Autowired
-    public ApiTest setDbPrecondition(DbPrecondition dbPrecondition) {
-        this.dbPrecondition = dbPrecondition;
-        return this;
+    public DataForCheck<String, Integer> getDataWithIntegerValue()
+    {
+        return new DataForCheck<>();
+    }
+
+    public JsonClient getJsonClient()
+    {
+        return jsonClient;
+    }
+
+    protected String random() {
+        return new BigInteger(20, new Random()).toString(10);
     }
 }
