@@ -1,5 +1,3 @@
-package tests;
-
 import core.service.ApiTest;
 import org.testng.annotations.Test;
 import java.util.HashMap;
