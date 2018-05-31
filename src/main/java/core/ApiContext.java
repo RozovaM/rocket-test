@@ -3,6 +3,7 @@ package core;
 import core.builders.DefaultRequestBuilder;
 import core.models.Config;
 import core.models.api.HttpRequest;
+import core.modules.http.HttpDriver;
 import core.service.api.*;
 import core.service.api.authStringGenerators.AuthStringGenerator;
 import core.service.api.authStringGenerators.BasicAuthStringGenerator;
@@ -29,6 +30,11 @@ public class ApiContext
     JsonClient jsonClient;
     @Autowired
     Config config;
+
+    @Bean
+    HttpDriver httpDriver(){
+        return new HttpDriver(httpRequestService, defaultRestApiHttpRequest, jsonClient);
+    }
 
     @Bean
     EndpointService restApiBasicAuth(){
