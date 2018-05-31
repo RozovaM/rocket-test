@@ -1,8 +1,8 @@
-package api.rest.library.services;
+package core.service.api;
 
-import api.rest.library.exceptions.JsonClientException;
-import api.rest.library.models.DomainModel;
-import api.rest.library.models.RequestCollection;
+import core.exceptions.JsonClientException;
+import core.models.api.DomainModel;
+import core.models.api.RequestCollection;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;

@@ -1,4 +1,4 @@
-package api.rest.dummies;
+package core.dummies;
 
 import java.math.BigInteger;
 import java.util.Random;

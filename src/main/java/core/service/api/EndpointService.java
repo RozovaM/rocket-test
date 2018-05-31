@@ -1,10 +1,10 @@
-package api.rest.library.services;
+package core.service.api;
 
-import api.rest.library.builders.DefaultRequestBuilder;
-import api.rest.library.exceptions.ElementDoesntMatchException;
-import api.rest.library.models.HttpRequest;
-import api.rest.library.models.Response;
-import api.rest.library.models.Assertion;
+import core.builders.DefaultRequestBuilder;
+import core.exceptions.ElementDoesntMatchException;
+import core.models.api.HttpRequest;
+import core.models.api.Response;
+import core.models.api.Assertion;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.HttpStatusCodeException;
 

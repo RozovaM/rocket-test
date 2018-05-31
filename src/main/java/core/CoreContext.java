@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
 @Configuration
-@ComponentScan(basePackages = {"core", "tests"})
+@ComponentScan(basePackages = {"core"})
 @Lazy
 public class CoreContext {
     @Bean

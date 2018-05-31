@@ -1,4 +1,4 @@
-package api.rest.library.exceptions;
+package core.exceptions;
 
 
 public class ElementDoesntMatchException extends Exception

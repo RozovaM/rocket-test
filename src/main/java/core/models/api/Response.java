@@ -1,4 +1,4 @@
-package api.rest.library.models;
+package core.models.api;
 
 import org.springframework.http.HttpHeaders;
 

@@ -1,9 +1,9 @@
 package core.service;
 
 import core.models.Config;
-import api.rest.library.models.DataForCheck;
-import api.rest.library.services.EndpointService;
-import api.rest.library.services.JsonClient;
+import core.models.api.DataForCheck;
+import core.service.api.EndpointService;
+import core.service.api.JsonClient;
 import core.ApiContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;

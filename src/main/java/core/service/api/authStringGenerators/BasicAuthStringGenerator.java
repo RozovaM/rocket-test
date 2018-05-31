@@ -1,4 +1,4 @@
-package api.rest.library.services.authStringGenerators;
+package core.service.api.authStringGenerators;
 
 import org.springframework.util.Base64Utils;
 

@@ -1,6 +1,6 @@
-package api.rest.library.models;
+package core.models.api;
 
-import api.rest.library.services.JsonClient;
+import core.service.api.JsonClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.springframework.http.HttpHeaders;

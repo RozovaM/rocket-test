@@ -1,5 +1,4 @@
-package api.rest.library.services.authStringGenerators;
-
+package core.service.api.authStringGenerators;
 
 public interface AuthStringGenerator
 {

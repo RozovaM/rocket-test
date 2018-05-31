@@ -1,6 +1,6 @@
-package api.rest.library.builders;
+package core.builders;
 
-import api.rest.library.models.HttpRequest;
+import core.models.api.HttpRequest;
 import org.springframework.http.HttpHeaders;
 
 public class DefaultRequestBuilder

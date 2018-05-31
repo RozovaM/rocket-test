@@ -1,6 +1,6 @@
-package api.rest.library.models;
+package core.models.api;
 
-import api.rest.library.exceptions.ElementDoesntMatchException;
+import core.exceptions.ElementDoesntMatchException;
 import org.springframework.http.HttpHeaders;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;

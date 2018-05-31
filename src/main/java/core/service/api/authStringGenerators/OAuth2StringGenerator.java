@@ -1,10 +1,10 @@
-package api.rest.library.services.authStringGenerators;
+package core.service.api.authStringGenerators;
 
-import api.rest.library.exceptions.ElementDoesntMatchException;
-import api.rest.library.models.HttpRequest;
-import api.rest.library.models.Response;
-import api.rest.library.services.HttpRequestService;
-import api.rest.library.services.JsonClient;
+import core.exceptions.ElementDoesntMatchException;
+import core.models.api.HttpRequest;
+import core.models.api.Response;
+import core.service.api.HttpRequestService;
+import core.service.api.JsonClient;
 
 public class OAuth2StringGenerator implements AuthStringGenerator
 {

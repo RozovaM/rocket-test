@@ -10,17 +10,16 @@ public class FirstTest extends ApiTest
     public void getTireList()
     {
         HashMap<String, String> data = new HashMap<>();
-        data.put("name", "Hakka Blue 2 XL");
-        data.put("dimensions", "195/65R15 95V");
-        data.put("manufacturer", "Nokian");
+        data.put("firstname", "MARIANN");
+        data.put("lastname", "THANCHE");
+
         restApiBasicAuth
                 .addHeader("Authorization", "Basic bWFyaWFubi50aGFuY2hlQHZvbHZvY2Fycy5jb206Sm9lbHNzb25za2FuMjc=")
                 .addHeader("JSESSIONID","asdfsdasfaadsf")
                 .addHeader("mv-districtnumber", "312")
-                .sendGET("tire-shift/dealers/16/tire")
+                .sendGET("/minvolvoapi/api/v1.0/user")
                 .responseCodeIs(200)
-                .jsonResponseContainsField("items")
-                .jsonResponseContainsDataInCollection(data)
+                .jsonResponseContainsData(data)
                 .getJsonBody();
     }
 }
