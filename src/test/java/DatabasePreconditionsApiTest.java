@@ -15,22 +15,26 @@ public class DatabasePreconditionsApiTest extends ApiTest {
             groups = { "Dump:Basic", "Interface:RestAPI" },
             description = "Check POST /tire-shift/workshop/slot/reservation ...")
     public void bookSlot() throws JsonProcessingException {
+
         int userId = 10000013;
         int carId  = 12134813;
+
         given().db()
                 .has("users", getUser(userId))
                 .has("cars", getCar(carId, userId))
                 .has("tireShiftInternalOrder", getOrder());
+
         given().http()
                 .addHeader("Authorization", "Basic bWFyaWFubi50aGFuY2hlQHZvbHZvY2Fycy5jb206Sm9lbHNzb25za2FuMjc=")
                 .addHeader("Content-type","application/json")
                 .addHeader("JSESSIONID","asdfsdasfaadsf")
                 .addHeader("mv-districtnumber", "312");
+
         when().http()
                 .sendPOST("tire-shift/workshop/slot/reservation", getPost());
+        
         then().httpAssert()
-                //.responseCodeIs(201);
-                .responseCodeIs(400);
+                .responseCodeIs(201);
         and().dbAssert()
                 .has("tireShiftInternalOrder", new InternalOrderMapper(), getResult(carId));
     }

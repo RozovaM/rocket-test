@@ -1,26 +1,26 @@
 package core.service;
 
+import core.DatabaseContext;
 import core.models.Config;
-import core.models.api.Assertion;
 import core.models.api.DataForCheck;
 import core.modules.database.DatabaseAssert;
 import core.modules.database.DatabaseDriver;
+import core.modules.database.Models.DbDump;
 import core.modules.http.HttpAssert;
 import core.modules.http.HttpDriver;
 import core.service.api.EndpointService;
 import core.service.api.JsonClient;
 import core.ApiContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
+
 import java.math.BigInteger;
-import java.util.Map;
 import java.util.Random;
 
-@ContextConfiguration(classes = {ApiContext.class}, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = {ApiContext.class, DatabaseContext.class}, loader = AnnotationConfigContextLoader.class)
 public class ApiTest extends AbstractTestNGSpringContextTests
 {
     @Autowired
@@ -35,10 +35,11 @@ public class ApiTest extends AbstractTestNGSpringContextTests
     @Autowired
     protected JsonClient jsonClient;
 
-    public ApiTest()
-    {
-        Config config = new Config("config.ini");
-    }
+    @Autowired
+    protected DbDump dbDump;
+
+    @Autowired
+    protected Config config;
 
     public DataForCheck<String, String> getDataWithStringValue()
     {
