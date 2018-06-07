@@ -1,13 +1,15 @@
 package core;
 
-import core.builders.DefaultRequestBuilder;
-import core.models.Config;
-import core.models.api.HttpRequest;
-import core.modules.http.HttpDriver;
-import core.service.api.*;
-import core.service.api.authStringGenerators.AuthStringGenerator;
-import core.service.api.authStringGenerators.BasicAuthStringGenerator;
-import core.service.api.authStringGenerators.OAuth2StringGenerator;
+import core.modules.rest.builders.DefaultRequestBuilder;
+import core.modules.library.models.Config;
+import core.modules.rest.models.HttpRequest;
+import core.modules.rest.services.CustomizedEndpointService;
+import core.modules.rest.services.EndpointService;
+import core.modules.rest.services.HttpRequestService;
+import core.modules.rest.services.JsonClient;
+import core.modules.rest.services.authStringGenerators.AuthStringGenerator;
+import core.modules.rest.services.authStringGenerators.BasicAuthStringGenerator;
+import core.modules.rest.services.authStringGenerators.OAuth2StringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
@@ -30,11 +32,6 @@ public class ApiContext
     JsonClient jsonClient;
     @Autowired
     Config config;
-
-    @Bean
-    HttpDriver httpDriver(){
-        return new HttpDriver(httpRequestService, defaultRestApiHttpRequest, jsonClient);
-    }
 
     @Bean
     EndpointService restApiBasicAuth(){

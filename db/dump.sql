@@ -42,7 +42,7 @@ LOCK TABLES `actions` WRITE;
 INSERT INTO `actions` (`id`, `name`, `key`, `title`, `param`)
 VALUES
   (1,'remind','remind','Påminn',NULL),
-  (2,'VOCExpireAgreement.readMore','open_web_view','Läs mer','http://support.volvocars.com/se/Pages/article.aspx?article=088b4f0af650815ec0a801516931c388'),
+  (2,'VOCExpireAgreement.readMore','open_web_view','Läs mer','rest://support.volvocars.com/se/Pages/article.aspx?article=088b4f0af650815ec0a801516931c388'),
   (3,'contactWorkshop','open_screen','Kontakta verkstad','contact_workshop'),
   (4,'renewOnline','open_web_view','Förläng online','https://store.volvocars.com'),
   (5,'openVOC','open_voc','Öppna Volvo On Call',NULL),

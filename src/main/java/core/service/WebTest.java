@@ -2,7 +2,7 @@ package core.service;
 
 import com.codeborne.selenide.Screenshots;
 import core.CoreContext;
-import core.models.DbPrecondition;
+import core.modules.database.services.DbPrecondition;
 import core.models.web.Web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;

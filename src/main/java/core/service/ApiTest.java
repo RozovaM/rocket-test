@@ -1,15 +1,13 @@
 package core.service;
 
 import core.DatabaseContext;
-import core.models.Config;
-import core.models.api.DataForCheck;
-import core.modules.database.DatabaseAssert;
-import core.modules.database.DatabaseDriver;
-import core.modules.database.Models.DbDump;
-import core.modules.http.HttpAssert;
-import core.modules.http.HttpDriver;
-import core.service.api.EndpointService;
-import core.service.api.JsonClient;
+import core.modules.library.models.Config;
+import core.modules.bdd.models.AcceptanceCriteria;
+import core.modules.database.services.Database;
+import core.modules.database.models.DbDump;
+import core.modules.rest.models.DataForCheck;
+import core.modules.rest.services.EndpointService;
+import core.modules.rest.services.JsonClient;
 import core.ApiContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,10 +25,7 @@ public class ApiTest extends AbstractTestNGSpringContextTests
     protected EndpointService restApiBasicAuth;
 
     @Autowired
-    protected HttpDriver httpDriver;
-
-    @Autowired
-    protected DatabaseDriver databaseDriver;
+    protected Database database;
 
     @Autowired
     protected JsonClient jsonClient;
@@ -41,14 +36,9 @@ public class ApiTest extends AbstractTestNGSpringContextTests
     @Autowired
     protected Config config;
 
-    public DataForCheck<String, String> getDataWithStringValue()
+    public DataForCheck getDataWithStringValue()
     {
-        return new DataForCheck<>();
-    }
-
-    public DataForCheck<String, Integer> getDataWithIntegerValue()
-    {
-        return new DataForCheck<>();
+        return new DataForCheck();
     }
 
     public JsonClient getJsonClient()
@@ -60,43 +50,15 @@ public class ApiTest extends AbstractTestNGSpringContextTests
         return new BigInteger(20, new Random()).toString(10);
     }
 
-    // TODO: have to be moved to the base test class
-    public ApiTest given(){
-        return this;
+    public AcceptanceCriteria<ApiTest> ac() {
+        return new AcceptanceCriteria<>(this);
     }
 
-    // TODO: have to be moved to the base test class
-    public ApiTest when(){
-        return this;
+    public Database db(){
+        return database;
     }
 
-    // TODO: have to be moved to the base test class
-    public ApiTest then(){
-        return this;
-    }
-
-    // TODO: have to be moved to the base test class
-    public ApiTest and(){
-        return this;
-    }
-
-    // TODO: have to be moved to the base test class
-    public DatabaseDriver db(){
-        return databaseDriver;
-    }
-
-    // TODO: have to be moved to the base test class
-    public DatabaseAssert dbAssert(){
-        return databaseDriver.getAssert();
-    }
-
-    // TODO: have to be moved to the base test class
-    public HttpDriver http(){
-        return httpDriver;
-    }
-
-    // TODO: have to be moved to the base test class
-    public HttpAssert httpAssert(){
-        return httpDriver.getAssert();
+    public EndpointService rest(){
+        return restApiBasicAuth;
     }
 }

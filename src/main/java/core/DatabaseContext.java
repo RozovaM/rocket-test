@@ -1,13 +1,13 @@
 package core;
 
-import core.models.Config;
-import core.modules.database.DatabaseDriver;
-import core.modules.database.Models.DbConnection;
-import core.modules.database.Models.DbDump;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
+import core.modules.library.models.Config;
+import core.modules.database.services.Database;
+import core.modules.database.services.DatabaseAssert;
+import core.modules.database.models.DbConnection;
+import core.modules.database.models.DbDump;
+import core.modules.database.services.LightQueryBuilder;
+import org.springframework.context.annotation.*;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import java.util.prefs.Preferences;
@@ -39,7 +39,23 @@ public class DatabaseContext {
     }
 
     @Bean
-    public DatabaseDriver databaseDriver () {
-        return new DatabaseDriver(driverManager());
+    @Scope("prototype")
+    public JdbcTemplate jdbcTemplate () {
+        return new JdbcTemplate(driverManager());
+    }
+
+    @Bean
+    public LightQueryBuilder lightQueryBuilder () {
+        return new LightQueryBuilder();
+    }
+
+    @Bean
+    public DatabaseAssert databaseAssert () {
+        return new DatabaseAssert(jdbcTemplate(), lightQueryBuilder());
+    }
+
+    @Bean
+    public Database databaseDriver () {
+        return new Database(databaseAssert(), jdbcTemplate(), lightQueryBuilder());
     }
 }

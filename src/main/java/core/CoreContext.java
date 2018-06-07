@@ -1,9 +1,9 @@
 package core;
 
-import core.models.Config;
-import core.models.DbPrecondition;
-import core.models.SshClient;
-import core.models.web.Web;
+import core.modules.library.models.Config;
+import core.modules.database.services.DbPrecondition;
+import core.modules.library.models.SshClient;
+import core.modules.web.models.Web;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
