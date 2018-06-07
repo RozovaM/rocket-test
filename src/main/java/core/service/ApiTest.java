@@ -25,6 +25,9 @@ public class ApiTest extends AbstractTestNGSpringContextTests
     protected EndpointService restApiBasicAuth;
 
     @Autowired
+    protected EndpointService restApiOAuth2;
+
+    @Autowired
     protected Database database;
 
     @Autowired
@@ -58,7 +61,11 @@ public class ApiTest extends AbstractTestNGSpringContextTests
         return database;
     }
 
-    public EndpointService rest(){
+    public EndpointService rest() {
         return restApiBasicAuth;
+    }
+
+    public EndpointService restWithOAuth() {
+        return restApiOAuth2;
     }
 }

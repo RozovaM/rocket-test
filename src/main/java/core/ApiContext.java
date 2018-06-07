@@ -34,12 +34,17 @@ public class ApiContext
     Config config;
 
     @Bean
-    EndpointService restApiBasicAuth(){
+    public EndpointService restApiBasicAuth(){
         return new EndpointService(httpRequestService, defaultRestApiHttpRequest, jsonClient);
     }
 
     @Bean
-    CustomizedEndpointService restApi(){
+    public EndpointService restApiOAuth2(){
+        return new EndpointService(httpRequestService, defaultRestApiOAuth2HttpRequest(), jsonClient);
+    }
+
+    @Bean
+    public CustomizedEndpointService restApi(){
         return new CustomizedEndpointService(httpRequestService, defaultRestApiHttpRequest, jsonClient, config);
     }
 
@@ -60,7 +65,12 @@ public class ApiContext
     @Bean
     public AuthStringGenerator oAuth2StringGenerator()
     {
-        return new OAuth2StringGenerator(httpRequestService(), restApiHttpRequestForHttpAuthorization(), new JsonClient());
+        return new OAuth2StringGenerator(
+                httpRequestService(),
+                restApiHttpRequestForHttpAuthorization(),
+                new JsonClient(),
+                config.getPreference().node("OAuth2").get("uri", "")
+        );
     }
 
     @Bean
@@ -92,7 +102,7 @@ public class ApiContext
         httpHeaders.add("Content-Type", "application/json");
         httpHeaders.add("Accept", "*/*");
         httpHeaders.add("Authorization", oAuth2StringGenerator().generate());
-
+        System.out.println(oAuth2StringGenerator().generate());
         return (new DefaultRequestBuilder()).build(
                 config().getPreference().node("Api").get("baseUrl", ""),
                 httpHeaders
@@ -109,7 +119,7 @@ public class ApiContext
         httpHeaders.add("Authorization", basicAuthForOAuth2StringGenerator().generate());
 
         return (new DefaultRequestBuilder()).build(
-                config().getPreference().node("Servers").get("oAuth2", ""),
+                config().getPreference().node("Api").get("baseUrl", ""),
                 httpHeaders
         );
     }

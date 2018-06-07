@@ -21,9 +21,7 @@ public class ExampleApiTest extends ApiTest {
             .haveInTable("tireShiftInternalOrder", getDataWithStringValue()
                     .add("sessionId", "66f9df99-3701-4e1f-9689-dasdada54b09b1").add("status", "created").getData());
 
-        rest()
-            .addHeader("Authorization", "Basic bWFyaWFubi50aGFuY2hlQHZvbHZvY2Fycy5jb206Sm9lbHNzb25za2FuMjc=")
-            .addHeader("Content-type","application/json")
+        restWithOAuth()
             .addHeader("JSESSIONID","asdfsdasfaadsf")
             .addHeader("mv-districtnumber", "312")
             .sendPOST("tire-shift/workshop/slot/reservation", getDataWithStringValue().add("branchId", "9")

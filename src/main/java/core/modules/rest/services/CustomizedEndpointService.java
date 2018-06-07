@@ -56,7 +56,8 @@ public class CustomizedEndpointService extends EndpointService
         return new OAuth2StringGenerator(
                 getHttpRequestService(),
                 httpRequest,
-                getJsonClient()
+                getJsonClient(),
+                config.getPreference().node("OAuth2").get("uri", "")
         ).generate();
     }
 
