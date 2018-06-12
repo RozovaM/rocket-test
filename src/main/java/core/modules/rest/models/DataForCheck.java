@@ -2,6 +2,7 @@ package core.modules.rest.models;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import core.modules.library.models.ColorfulConsole;
 
 import java.util.HashMap;
 
@@ -29,7 +30,7 @@ public class DataForCheck
         try{
             return new ObjectMapper().writeValueAsString(data);
         } catch (JsonProcessingException exception) {
-            System.out.println("Can't convert data to json. Error:" + exception.getMessage());
+            new ColorfulConsole().println("Can't convert data to json. Error:" + exception.getMessage(), ColorfulConsole.RED);
         }
 
         return "";

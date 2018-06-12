@@ -1,5 +1,6 @@
 package core.modules.rest.services;
 
+import core.modules.library.models.Verbose;
 import core.modules.rest.models.HttpRequest;
 import core.modules.rest.models.Response;
 import org.apache.http.client.HttpClient;
@@ -20,35 +21,25 @@ import java.nio.charset.Charset;
 public final class HttpRequestService
 {
     private RestTemplate rest;
-    private Boolean debugMode = false;
+    private Verbose verbose;
 
     private static final int MAX_CONNECTIONS_PER_ROUTE = 100;
     private static final int MAX_CONNECTIONS_TOTAL = 1000;
 
-    public HttpRequestService(Boolean debugMode)
-    {
-        setDebugMode(debugMode);
+    public HttpRequestService(Verbose verbose) {
         createRestTemplate();
+        this.verbose = verbose;
     }
 
     public Response query(HttpRequest httpRequest) {
-        if (getDebugMode()) {
-            printRequest(httpRequest);
-        }
+        verbose.testInfo("REST API Request", request(httpRequest));
 
         HttpEntity<String> requestEntity = new HttpEntity<String>(httpRequest.getBody(), httpRequest.getHeaders());
         return exchange(httpRequest.getFullUrl(), HttpMethod.valueOf(httpRequest.getMethod()), requestEntity);
     }
 
-    private void printRequest(HttpRequest httpRequest) {
-        System.out.println(
-                "Request:\n" +
-                        httpRequest.getMethod() +
-                        " " +
-                        httpRequest.getServer() +
-                        httpRequest.getPathUrl() +
-                        httpRequest.getBody()
-        );
+    private String request(HttpRequest httpRequest) {
+        return  httpRequest.getMethod() + " " + httpRequest.getServer() + httpRequest.getPathUrl() + httpRequest.getBody();
     }
 
     public Response sendFile(String filePath, HttpRequest httpRequest){
@@ -98,20 +89,9 @@ public final class HttpRequestService
             );
         }
 
-        if (getDebugMode()){
-            System.out.println(response.toString());
-        }
+        verbose.testInfo("Response", response.toString());
 
         return response;
-    }
-
-    private Boolean getDebugMode() {
-        return debugMode;
-    }
-
-    public HttpRequestService setDebugMode(Boolean debugMode) {
-        this.debugMode = debugMode;
-        return this;
     }
 
     private RestTemplate getRest() {

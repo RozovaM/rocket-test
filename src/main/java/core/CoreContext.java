@@ -3,6 +3,7 @@ package core;
 import core.modules.library.models.Config;
 import core.modules.database.services.DbPrecondition;
 import core.modules.library.models.SshClient;
+import core.modules.library.models.Verbose;
 import core.modules.web.models.Web;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.springframework.context.annotation.Bean;

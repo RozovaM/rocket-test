@@ -1,5 +1,6 @@
 package core.modules.database.services;
 
+import core.modules.library.models.Verbose;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.Map;
@@ -12,14 +13,20 @@ public class Database {
 
     private LightQueryBuilder lightQueryBuilder;
 
-    public Database(DatabaseAssert dbAssert, JdbcTemplate jdbcTemplate, LightQueryBuilder lightQueryBuilder) {
+    private Verbose verbose;
+
+    public Database(DatabaseAssert dbAssert, JdbcTemplate jdbcTemplate, LightQueryBuilder lightQueryBuilder, Verbose verbose) {
         this.dbAssert = dbAssert;
         this.jdbcTemplate = jdbcTemplate;
         this.lightQueryBuilder = lightQueryBuilder;
+        this.verbose = verbose;
     }
 
     public Database haveInTable(String table, Map data){
-        jdbcTemplate.update(lightQueryBuilder.buildInsert(table, data));
+
+        String sql = lightQueryBuilder.buildInsert(table, data);
+        jdbcTemplate.update(sql);
+        verbose.testInfo("Create precondition in DB", sql);
         return this;
     }
 

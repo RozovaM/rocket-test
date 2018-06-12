@@ -1,5 +1,6 @@
 package core.modules.rest.services.authStringGenerators;
 
+import core.modules.library.models.ColorfulConsole;
 import core.modules.rest.exceptions.ElementDoesntMatchException;
 import core.modules.rest.models.HttpRequest;
 import core.modules.rest.models.Response;
@@ -31,12 +32,12 @@ public class OAuth2StringGenerator implements AuthStringGenerator
                             .setBody("")
             );
         } catch (ElementDoesntMatchException e) {
-            System.out.println(e.getMessage());
+            new ColorfulConsole().println(e.getMessage(), ColorfulConsole.RED);
             return "";
         }
 
         if (!response.getStatusCode().equals(200)) {
-            System.out.println(response.getStatusCode() + response.getStatusText());
+            new ColorfulConsole().println(response.getStatusCode() + response.getStatusText(), ColorfulConsole.RED);
             return "";
         }
 

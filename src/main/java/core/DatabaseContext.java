@@ -6,6 +6,7 @@ import core.modules.database.services.DatabaseAssert;
 import core.modules.database.models.DbConnection;
 import core.modules.database.models.DbDump;
 import core.modules.database.services.LightQueryBuilder;
+import core.modules.library.models.Verbose;
 import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -23,9 +24,13 @@ public class DatabaseContext {
     }
 
     @Bean
-
     public Preferences generalConfig() {
         return config().getPreference().node("General");
+    }
+
+    @Bean
+    public Verbose verbose() {
+        return new Verbose(config().getPreference().node("General").getBoolean("debug", false));
     }
 
     @Bean
@@ -51,11 +56,11 @@ public class DatabaseContext {
 
     @Bean
     public DatabaseAssert databaseAssert () {
-        return new DatabaseAssert(jdbcTemplate(), lightQueryBuilder());
+        return new DatabaseAssert(jdbcTemplate(), lightQueryBuilder(), verbose());
     }
 
     @Bean
     public Database databaseDriver () {
-        return new Database(databaseAssert(), jdbcTemplate(), lightQueryBuilder());
+        return new Database(databaseAssert(), jdbcTemplate(), lightQueryBuilder(), verbose());
     }
 }

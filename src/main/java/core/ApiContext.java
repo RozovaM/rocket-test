@@ -1,5 +1,6 @@
 package core;
 
+import core.modules.library.models.Verbose;
 import core.modules.rest.builders.DefaultRequestBuilder;
 import core.modules.library.models.Config;
 import core.modules.rest.models.HttpRequest;
@@ -36,6 +37,11 @@ public class ApiContext
     @Bean
     public EndpointService restApiBasicAuth(){
         return new EndpointService(httpRequestService, defaultRestApiHttpRequest, jsonClient);
+    }
+
+    @Bean
+    public Verbose verbose() {
+        return new Verbose(config().getPreference().node("General").getBoolean("debug", false));
     }
 
     @Bean
@@ -102,7 +108,7 @@ public class ApiContext
         httpHeaders.add("Content-Type", "application/json");
         httpHeaders.add("Accept", "*/*");
         httpHeaders.add("Authorization", oAuth2StringGenerator().generate());
-        System.out.println(oAuth2StringGenerator().generate());
+
         return (new DefaultRequestBuilder()).build(
                 config().getPreference().node("Api").get("baseUrl", ""),
                 httpHeaders
@@ -127,9 +133,7 @@ public class ApiContext
     @Bean
     public HttpRequestService httpRequestService()
     {
-        return new HttpRequestService(
-                config().getPreference().node("General").getBoolean("debug", false)
-        );
+        return new HttpRequestService(verbose());
     }
 
     //-------------------End HttpHeaders------------------------

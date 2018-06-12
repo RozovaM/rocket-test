@@ -1,5 +1,6 @@
 package core.modules.rest.services.authStringGenerators;
 
+import core.modules.library.models.ColorfulConsole;
 import org.springframework.util.Base64Utils;
 
 import java.io.UnsupportedEncodingException;
@@ -27,7 +28,7 @@ public class BasicAuthStringGenerator implements AuthStringGenerator
         try {
             authStringBytes = authString.getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {
-            System.out.println("Something went wrong while creating auth string.");
+            new ColorfulConsole().println("Something went wrong while creating auth string.", ColorfulConsole.RED);
         }
 
         return "Basic " + Base64Utils.encodeToString(authStringBytes);
