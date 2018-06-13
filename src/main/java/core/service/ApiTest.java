@@ -2,11 +2,8 @@ package core.service;
 
 import core.CoreContext;
 import core.DatabaseContext;
-import core.modules.library.listeners.Listener;
-import core.modules.library.models.Config;
 import core.modules.bdd.models.AcceptanceCriteria;
 import core.modules.database.services.Database;
-import core.modules.database.models.DbDump;
 import core.modules.library.models.Verbose;
 import core.modules.rest.models.DataForCheck;
 import core.modules.rest.services.EndpointService;
@@ -26,22 +23,16 @@ import java.util.Random;
 public class ApiTest extends AbstractTestNGSpringContextTests
 {
     @Autowired
-    protected EndpointService restApiBasicAuth;
+    private EndpointService restApiBasicAuth;
 
     @Autowired
-    protected EndpointService restApiOAuth2;
+    private EndpointService restApiOAuth2;
 
     @Autowired
-    protected Database database;
+    private Database database;
 
     @Autowired
-    protected JsonClient jsonClient;
-
-    @Autowired
-    protected DbDump dbDump;
-
-    @Autowired
-    protected Config config;
+    private JsonClient jsonClient;
 
     @Autowired
     private Verbose verbose;
