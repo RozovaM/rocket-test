@@ -3,7 +3,7 @@ package core.service;
 import com.codeborne.selenide.Screenshots;
 import core.CoreContext;
 import core.modules.database.services.DbPrecondition;
-import core.models.web.Web;
+import core.modules.web.models.Web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
