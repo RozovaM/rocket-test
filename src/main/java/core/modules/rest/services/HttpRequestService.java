@@ -52,11 +52,6 @@ public final class HttpRequestService
         return exchange(httpRequest.getFullUrl(),  HttpMethod.valueOf(httpRequest.getMethod()), requestEntity);
     }
 
-    /**
-     * Send HTTP request (POST or PUT) with provided headers and binary data as payload
-     * @param httpRequest
-     * @return
-     */
     public Response sendBinaryData(HttpRequest httpRequest) {
         return exchange(
                 httpRequest.getFullUrl(),

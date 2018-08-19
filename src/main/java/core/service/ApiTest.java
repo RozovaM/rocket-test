@@ -10,6 +10,7 @@ import core.modules.rest.services.EndpointService;
 import core.modules.rest.services.JsonClient;
 import core.ApiContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -23,9 +24,9 @@ import java.util.Random;
 public class ApiTest extends AbstractTestNGSpringContextTests
 {
     @Autowired
-    private EndpointService restApiBasicAuth;
+    private EndpointService restApiSimple;
 
-    @Autowired
+    @Autowired @Lazy
     private EndpointService restApiOAuth2;
 
     @Autowired
@@ -42,30 +43,30 @@ public class ApiTest extends AbstractTestNGSpringContextTests
         verbose.testReport(result);
     }
 
-    public DataForCheck getDataWithStringValue()
-    {
-        return new DataForCheck();
+    public Database db(){
+        return database;
     }
 
-    public JsonClient getJsonClient()
-    {
-        return jsonClient;
-    }
-
-    protected String random() {
-        return new BigInteger(20, new Random()).toString(10);
+    public EndpointService rest() {
+        return restApiSimple;
     }
 
     public AcceptanceCriteria<ApiTest> ac() {
         return new AcceptanceCriteria<>(this);
     }
 
-    public Database db(){
-        return database;
+    public DataForCheck getDataWithStringValue()
+    {
+        return new DataForCheck();
     }
 
-    public EndpointService rest() {
-        return restApiBasicAuth;
+    public JsonClient jsonClient()
+    {
+        return jsonClient;
+    }
+
+    protected String random() {
+        return new BigInteger(20, new Random()).toString(10);
     }
 
     public EndpointService restWithOAuth() {

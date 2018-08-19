@@ -1,10 +1,13 @@
-package core.mobile;
+package core.modules.mobile.services;
 
+import core.modules.mobile.models.MobileAssertion;
+import core.modules.mobile.models.TestMobileElement;
+import core.modules.mobile.models.TestMobileElements;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.TouchAction;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Mobile {
 
@@ -15,6 +18,7 @@ public class Mobile {
     }
 
     public MobileAssertion useMobileElementsForAssertion(String xpathOfElement) throws Exception{
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         List<MobileElement> elements = driver.findElementsByXPath(xpathOfElement);
 
         return new MobileAssertion(elements);
@@ -31,19 +35,5 @@ public class Mobile {
     public Mobile pageElements(){
         System.out.println(driver.getPageSource());
         return this;
-    }
-
-    public Mobile swipeScreenRightLeft() throws Exception {
-        driver.swipe(800,100, 1, 100, 0);
-        return this;
-    }
-
-    private void swipe(int startx, int starty, int endx, int endy, int duration) { // Android ONLY!
-        System.out.println("    swipe(" + startx + ", " + starty + ", " + endx + ", " + endy + ")");
-        new TouchAction(driver).press(startx, starty).waitAction(0).moveTo(endx, endy).release().perform();
-    }
-
-    private void swipeIOS(int startx, int starty, int endx, int endy, int duration) {
-        swipe(startx, starty, -startx + endx, -starty + endy, duration);
     }
 }

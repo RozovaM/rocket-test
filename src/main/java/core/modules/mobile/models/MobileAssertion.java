@@ -1,4 +1,4 @@
-package core.mobile;
+package core.modules.mobile.models;
 
 import io.appium.java_client.MobileElement;
 import org.testng.Assert;

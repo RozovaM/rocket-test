@@ -11,6 +11,8 @@
  - Selenide [http://selenide.org/]
 
  - some IDE [I prefer IntelliJ IDEA]
+ 
+ - for mobile testing [brew install carthage]
 
 ## Getting Started
 

@@ -26,17 +26,28 @@ public class ApiContext
 {
     @Autowired
     HttpRequestService httpRequestService;
+
     @Autowired
     @Qualifier("defaultRestApiHttpRequest")
     HttpRequest defaultRestApiHttpRequest;
+
+    @Autowired
+    @Qualifier("defaultRestApiHttpRequestBasicAuth")
+    HttpRequest defaultRestApiHttpRequestBasicAuth;
+
     @Autowired
     JsonClient jsonClient;
     @Autowired
     Config config;
 
     @Bean
-    public EndpointService restApiBasicAuth(){
+    public EndpointService restApiSimple(){
         return new EndpointService(httpRequestService, defaultRestApiHttpRequest, jsonClient);
+    }
+
+    @Bean
+    public EndpointService restApiBasicAuth(){
+        return new EndpointService(httpRequestService, defaultRestApiHttpRequestBasicAuth, jsonClient);
     }
 
     @Bean
@@ -81,7 +92,7 @@ public class ApiContext
 
     @Bean
     @Scope("prototype")
-    public HttpHeaders defaultRestApiHttpHeaders() {
+    public HttpHeaders defaultRestApiHttpHeadersWithBasicAuth() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Type", "application/json");
         httpHeaders.add("Accept", "*/*");
@@ -89,6 +100,14 @@ public class ApiContext
         return httpHeaders;
     }
 
+    @Bean
+    @Scope("prototype")
+    public HttpHeaders defaultRestApiHttpHeaders() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-Type", "application/json");
+        httpHeaders.add("Accept", "*/*");
+        return httpHeaders;
+    }
 
     @Bean
     @Scope("prototype")
@@ -97,6 +116,16 @@ public class ApiContext
         return (new DefaultRequestBuilder()).build(
                 config().getPreference().node("Api").get("baseUrl", ""),
                 defaultRestApiHttpHeaders()
+        );
+    }
+
+    @Bean
+    @Scope("prototype")
+    public HttpRequest defaultRestApiHttpRequestBasicAuth()
+    {
+        return (new DefaultRequestBuilder()).build(
+                config().getPreference().node("Api").get("baseUrl", ""),
+                defaultRestApiHttpHeadersWithBasicAuth()
         );
     }
 

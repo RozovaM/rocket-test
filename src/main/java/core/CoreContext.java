@@ -1,9 +1,10 @@
 package core;
 
+import core.modules.mobile.models.MobileDriver;
 import core.modules.library.models.Config;
 import core.modules.database.services.DbPrecondition;
 import core.modules.library.models.SshClient;
-import core.modules.library.models.Verbose;
+import core.modules.mobile.services.Mobile;
 import core.modules.web.models.Web;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.springframework.context.annotation.Bean;
@@ -35,5 +36,15 @@ public class CoreContext {
         ChromeDriverManager.getInstance().setup();
         com.codeborne.selenide.Configuration.browser = "chrome";
         return new Web(config().getPreference().node("Web").get("baseUrl", ""));
+    }
+
+    @Bean
+    public MobileDriver mobileDriver(){
+        return new MobileDriver(config().getPreference().node("iOS"));
+    }
+
+    @Bean
+    public Mobile mobile() throws Exception {
+        return new Mobile(mobileDriver().driver());
     }
 }

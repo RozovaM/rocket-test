@@ -22,14 +22,14 @@ public class EndpointService
 
     public EndpointService addHeader(String name, String value)
     {
-        Object[] auth = getHttpRequest().getHeaders().get("Authorization").toArray();
+        //Object[] auth = getHttpRequest().getHeaders().get("Authorization").toArray();
         HttpHeaders httpHeaders = new HttpHeaders();
 
         if (!name.equals("Content-Type")){
             httpHeaders.add("Content-Type", "application/json");
         }
 
-        httpHeaders.set("Authorization", auth[0].toString());
+       // httpHeaders.set("Authorization", auth[0].toString());
         httpHeaders.add(name, value);
         HttpRequest httpRequest = (new DefaultRequestBuilder()).build(getHttpRequest().getServer(), httpHeaders);
         return new EndpointService(getHttpRequestService(), httpRequest, getJsonClient());
