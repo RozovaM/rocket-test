@@ -5,8 +5,6 @@ import core.modules.library.models.Config;
 import core.modules.database.services.DbPrecondition;
 import core.modules.library.models.SshClient;
 import core.modules.mobile.services.Mobile;
-import core.modules.web.models.Web;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -29,13 +27,6 @@ public class CoreContext {
     @Bean
     public DbPrecondition dbPrecondition() {
         return new DbPrecondition(amazonSshClient(), config().getPreference().node("dbPrecondition"));
-    }
-
-    @Bean
-    public Web web() {
-        ChromeDriverManager.getInstance().setup();
-        com.codeborne.selenide.Configuration.browser = "chrome";
-        return new Web(config().getPreference().node("Web").get("baseUrl", ""));
     }
 
     @Bean
