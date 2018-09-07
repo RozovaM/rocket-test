@@ -3,6 +3,7 @@ package core.service;
 import core.ApiContext;
 import core.CoreContext;
 import core.DatabaseContext;
+import core.modules.database.services.Database;
 import core.modules.database.services.DbPrecondition;
 import core.modules.library.models.Config;
 import core.modules.web.models_new.BrowserProvider;
@@ -20,18 +21,18 @@ import java.util.concurrent.TimeUnit;
 @ContextConfiguration(classes = {ApiContext.class, DatabaseContext.class, CoreContext.class}, loader = AnnotationConfigContextLoader.class)
 public class WebTest_new extends AbstractTestNGSpringContextTests {
 
-    private DbPrecondition dbPrecondition;
     private Web web;
     private WebDriver driver;
     private Config config;
 
+    @Autowired
+    private Database database;
+
     @BeforeMethod
     public void setUp() throws Exception {
-        //getDbPrecondition().prepareDb();
         config = new Config("config.ini");
         driver = BrowserProvider.createDriver(config.getPreference().node("Web").get("webBrowser", ""));
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     public Web getWeb() throws Exception{
@@ -53,15 +54,5 @@ public class WebTest_new extends AbstractTestNGSpringContextTests {
 
     public WebDriver getBrowserDriver () {
         return driver;
-    }
-
-    public DbPrecondition getDbPrecondition() {
-        return dbPrecondition;
-    }
-
-    @Autowired
-    public WebTest_new setDbPrecondition(DbPrecondition dbPrecondition) {
-        this.dbPrecondition = dbPrecondition;
-        return this;
     }
 }

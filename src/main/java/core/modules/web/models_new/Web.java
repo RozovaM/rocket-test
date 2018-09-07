@@ -15,7 +15,6 @@ public class Web {
         this.driver = browserDriver;
     }
 
-
     public Web open(String url) {
         driver.get(baseAdminUrl + url);
         return this;
@@ -33,23 +32,33 @@ public class Web {
 
     public WebElement handleNoSuchElementExceptionByXpath (String xpath){
         try {
+            System.out.println("----------------------" + xpath);
+            //TODO: rid of magic numbers
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
             return driver.findElement(By.xpath(xpath));
         } catch (Exception e) {
-            Assert.assertTrue(false, "Element not found");
+            Assert.fail( "Element with xpath + " + xpath + "not found");
             return null;
         }
     }
 
     public WebElement handleNoSuchElementExceptionByCss (String css){
         try {
+            System.out.println("----------------------" + css);
+            //TODO: rid of magic numbers
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(css)));
             return driver.findElement(By.cssSelector(css));
         } catch (Exception e) {
-            Assert.assertTrue(false, "Element not found");
+            Assert.fail("Element with css + " + css + "not found" );
             return null;
         }
     }
 
     public CustomWebElement useElementByLinkText (String text) {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(text)));
         WebElement element = driver.findElement(By.linkText(text));
     return new CustomWebElement(element, this, driver);
     }
@@ -168,7 +177,6 @@ public class Web {
 
     public WebAssertion waitUntilTextAppearsCss(String css, String text, int milisecondsToWait) {
         WebElement element = handleNoSuchElementExceptionByCss(css);
-        new WebDriverWait(driver, milisecondsToWait).until(ExpectedConditions.textToBePresentInElement(element, text));
         return new WebAssertion(element);
     }
 
