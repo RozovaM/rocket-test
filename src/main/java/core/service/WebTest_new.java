@@ -32,6 +32,7 @@ public class WebTest_new extends AbstractTestNGSpringContextTests {
     public void setUp() throws Exception {
         config = new Config("config.ini");
         driver = BrowserProvider.createDriver(config.getPreference().node("Web").get("webBrowser", ""));
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
     }
 
