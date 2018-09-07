@@ -1,4 +1,4 @@
-package core.modules.web.models_new;
+package core.modules.web.models;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -30,12 +30,8 @@ public class Web {
         return this;
     }
 
-    public WebElement handleNoSuchElementExceptionByXpath (String xpath){
+    public WebElement findElementByXpath(String xpath){
         try {
-            System.out.println("----------------------" + xpath);
-            //TODO: rid of magic numbers
-            WebDriverWait wait = new WebDriverWait(driver, 10);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
             return driver.findElement(By.xpath(xpath));
         } catch (Exception e) {
             Assert.fail( "Element with xpath + " + xpath + "not found");
@@ -43,12 +39,8 @@ public class Web {
         }
     }
 
-    public WebElement handleNoSuchElementExceptionByCss (String css){
+    public WebElement findElementByCss(String css){
         try {
-            System.out.println("----------------------" + css);
-            //TODO: rid of magic numbers
-            WebDriverWait wait = new WebDriverWait(driver, 10);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(css)));
             return driver.findElement(By.cssSelector(css));
         } catch (Exception e) {
             Assert.fail("Element with css + " + css + "not found" );
@@ -57,14 +49,11 @@ public class Web {
     }
 
     public CustomWebElement useElementByLinkText (String text) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(text)));
         WebElement element = driver.findElement(By.linkText(text));
     return new CustomWebElement(element, this, driver);
     }
 
     public Web switchToNewTab () {
-        String winHandleBefore = driver.getWindowHandle();
         for(String winHandle : driver.getWindowHandles()){
             driver.switchTo().window(winHandle);
         }
@@ -72,152 +61,152 @@ public class Web {
     }
 
     public WebAssertion useCssElementForAssertion(String css) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
         return new WebAssertion(element);
     }
 
     public Web useCssElementForAssertionAnd(String css) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
         return this;
     }
 
     public WebAssertion useXpathElementForAssertion(String xpath) {
-        WebElement element = handleNoSuchElementExceptionByXpath(xpath);
+        WebElement element = findElementByXpath(xpath);
         return new WebAssertion(element);
     }
 
     public Web useXpathElementForAssertionAnd(String xpath) {
-        WebElement element = handleNoSuchElementExceptionByXpath(xpath);
+        WebElement element = findElementByXpath(xpath);
         return this;
     }
 
     public CustomWebElement useElementByCss(String css) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
         return new CustomWebElement (element,this, driver);
     }
 
     public Web useElementByCssAnd(String css) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
         return this;
     }
 
     public CustomWebElement useElementByXpath(String xpath) {
-        WebElement element = handleNoSuchElementExceptionByXpath(xpath);
+        WebElement element = findElementByXpath(xpath);
         return new CustomWebElement(element,this, driver);
     }
 
     public Web useElementByXpathAnd(String xpath) {
-        WebElement element = handleNoSuchElementExceptionByXpath(xpath);
+        WebElement element = findElementByXpath(xpath);
         return this;
     }
 
     public CustomWebElement typeTextToInputFieldCss(String css, String value) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
         element.sendKeys(value);
     return new CustomWebElement(element, this, driver);
     }
 
     public Web typeTextToInputFieldCssAnd(String css, String value) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
         element.sendKeys(value);
         return this;
     }
 
     public CustomWebElement typeTextToInputFieldXpath(String xpath, String value) {
-        WebElement element = handleNoSuchElementExceptionByXpath(xpath);
+        WebElement element = findElementByXpath(xpath);
         element.sendKeys(value);
     return new CustomWebElement(element, this, driver);
     }
 
     public Web typeTextToInputFieldXpathAnd(String xpath, String value) {
-        WebElement element = handleNoSuchElementExceptionByXpath(xpath);
+        WebElement element = findElementByXpath(xpath);
         element.sendKeys(value);
         return this;
     }
 
     public CustomWebElement pressEnterUsingCss(String css) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
     return new CustomWebElement(element, this, driver);
     }
 
     public Web pressEnterUsingCssAnd(String css) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
         return this;
     }
 
     public CustomWebElement pressEnterUsingXpath(String xpath) {
-        WebElement element = handleNoSuchElementExceptionByXpath(xpath);
+        WebElement element = findElementByXpath(xpath);
     return new CustomWebElement(element, this, driver);
     }
 
     public Web pressEnterUsingXpathAnd(String xpath) {
-        WebElement element = handleNoSuchElementExceptionByXpath(xpath);
+        WebElement element = findElementByXpath(xpath);
         return this;
     }
 
     public CustomWebElement useCssElementAndTextForDropdownList(String css) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
     return new CustomWebElement(element, this, driver);
     }
 
     public Web useCssElementAndTextForDropdownListAnd(String css) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
         return this;
     }
 
     public WebAssertion useXpathElementAndTextForDropdownList(String xpath) {
-        WebElement element = handleNoSuchElementExceptionByXpath(xpath);
+        WebElement element = findElementByXpath(xpath);
         return new WebAssertion(element);
     }
 
     public Web useXpathElementAndTextForDropdownListAnd(String xpath) {
-        WebElement element = handleNoSuchElementExceptionByXpath(xpath);
+        WebElement element = findElementByXpath(xpath);
         return this;
     }
 
     public WebAssertion waitUntilTextAppearsCss(String css, String text, int milisecondsToWait) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
         return new WebAssertion(element);
     }
 
     public Web waitUntilTextAppearsCssAnd(String css, String text, int milisecondsToWait) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
         new WebDriverWait(driver, milisecondsToWait).until(ExpectedConditions.textToBePresentInElement(element, text));
         return this;
     }
 
     public WebAssertion waitUntilTextAppearsXpath(String xpath, String text, int milisecondsToWait) {
-        WebElement element = handleNoSuchElementExceptionByXpath(xpath);
+        WebElement element = findElementByXpath(xpath);
         new WebDriverWait(driver, milisecondsToWait).until(ExpectedConditions.textToBePresentInElement(element, text));
         return new WebAssertion(element);
     }
 
     public Web waitUntilTextAppearsXpathAnd(String xpath, String text, int milisecondsToWait) {
-        WebElement element = handleNoSuchElementExceptionByXpath(xpath);
+        WebElement element = findElementByXpath(xpath);
         new WebDriverWait(driver, milisecondsToWait).until(ExpectedConditions.textToBePresentInElement(element, text));
         return this;
     }
 
     public WebAssertion waitUntilAttributeAppearsCss(String css, String attributeName, String attributeValue, int milisecondsToWait) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
         new WebDriverWait(driver, milisecondsToWait).until(ExpectedConditions.attributeContains(element, attributeName, attributeValue));
         return new WebAssertion(element);
     }
 
     public Web waitUntilAttributeAppearsCssAnd(String css, String attributeName, String attributeValue, int milisecondsToWait) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
         new WebDriverWait(driver, milisecondsToWait).until(ExpectedConditions.attributeContains(element, attributeName, attributeValue));
         return this;
     }
 
     public WebAssertion waitUntilAttributeAppearsXpath(String xpath, String attributeName, String attributeValue, int milisecondsToWait) {
-        WebElement element = handleNoSuchElementExceptionByXpath(xpath);
+        WebElement element = findElementByXpath(xpath);
         new WebDriverWait(driver, milisecondsToWait).until(ExpectedConditions.attributeContains(element, attributeName, attributeValue));
         return new WebAssertion(element);
     }
 
     public Web waitUntilAttributeAppearsXpathAnd(String xpath, String attributeName, String attributeValue, int milisecondsToWait) {
-        WebElement element = handleNoSuchElementExceptionByXpath(xpath);
+        WebElement element = findElementByXpath(xpath);
         new WebDriverWait(driver, milisecondsToWait).until(ExpectedConditions.attributeContains(element, attributeName, attributeValue));
         return this;
     }
@@ -256,7 +245,7 @@ public class Web {
     }
 
     public WebAssertion useCssSelectorAndOpacityAttrForAssertion(String css, String expectedOpacity) {
-        WebElement element = handleNoSuchElementExceptionByCss(css);
+        WebElement element = findElementByCss(css);
         driver.findElement(By.cssSelector(css)).isEnabled();
         if (element.getCssValue("opacity").toString().equals(expectedOpacity)) {
             Assert.assertEquals(element.getCssValue("opacity").toString(), expectedOpacity, "Input Field should be enabled");

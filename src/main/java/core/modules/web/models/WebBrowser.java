@@ -1,4 +1,4 @@
-package core.modules.web.models_new;
+package core.modules.web.models;
 
 import io.github.bonigarcia.wdm.*;
 import org.openqa.selenium.WebDriver;

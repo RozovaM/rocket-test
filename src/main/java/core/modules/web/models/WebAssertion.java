@@ -1,4 +1,4 @@
-package core.modules.web.models_new;
+package core.modules.web.models;
 
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;

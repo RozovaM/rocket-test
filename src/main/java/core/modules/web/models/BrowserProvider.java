@@ -1,8 +1,7 @@
-package core.modules.web.models_new;
+package core.modules.web.models;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class BrowserProvider {
 
