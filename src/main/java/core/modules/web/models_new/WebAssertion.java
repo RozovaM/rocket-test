@@ -16,12 +16,11 @@ public class WebAssertion {
 //    }
 
     public void shouldBeEnabled(boolean condition) {
-        this.elementForAssert.isEnabled();
+        Assert.assertTrue(elementForAssert.isEnabled(), "Element is not enabled");
     }
 
     public void shouldBeDisplayed(boolean condition) {
-        Assert.assertTrue(elementForAssert.isDisplayed(), "Element not found");
-
+        Assert.assertTrue(elementForAssert.isDisplayed(), "Element is not displayed");
     }
 
 //     public void shouldBeImage(boolean condition) {
@@ -29,7 +28,7 @@ public class WebAssertion {
 //    }
 
     public void shouldBeSelected(boolean condition) {
-        this.elementForAssert.isSelected();
+        Assert.assertTrue(elementForAssert.isSelected(), "Element is not selected");
     }
 
 }
