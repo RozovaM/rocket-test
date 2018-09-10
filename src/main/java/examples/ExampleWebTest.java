@@ -9,7 +9,7 @@ public class ExampleWebTest extends WebTest {
             groups = { "Dump:Basic", "Web test" },
             description = "Add product to cart",
             dataProvider = "drivers")
-    public void addProductToCart (Integer driverNumber) throws Exception {
+    public void addProductToCart (Integer driverNumber) {
         web(driverNumber)
             .openAnyUrl("https://best.aliexpress.com")
             .typeTextToInputFieldXpath("//*[@id=\"search-key\"]", "lego")

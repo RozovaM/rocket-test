@@ -11,10 +11,6 @@ public class WebAssertion {
         this.elementForAssert = elementForAssert;
     }
 
-//    public void shouldHaveText(String condition) {
-//        this.elementForAssert.shouldHave(Condition.text(condition));
-//    }
-
     public void shouldBeEnabled(boolean condition) {
         Assert.assertTrue(elementForAssert.isEnabled(), "Element is not enabled");
     }
@@ -23,9 +19,9 @@ public class WebAssertion {
         Assert.assertTrue(elementForAssert.isDisplayed(), "Element is not displayed");
     }
 
-//     public void shouldBeImage(boolean condition) {
-//        this.elementForAssert.isImage();
-//    }
+     public void shouldBeImage(boolean condition) throws Exception{
+        throw new Exception("Method isn't support");
+    }
 
     public void shouldBeSelected(boolean condition) {
         Assert.assertTrue(elementForAssert.isSelected(), "Element is not selected");
