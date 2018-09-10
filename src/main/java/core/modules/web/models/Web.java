@@ -5,6 +5,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.util.List;
+
 public class Web {
 
     private WebDriver driver;
@@ -259,6 +261,17 @@ public class Web {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         WebElement element = (WebElement) js.executeScript(script);
     return new CustomWebElement(element, this, driver);
+    }
+
+    public WebAssertion useClassNameElementsForAssertion(String className, String ... expectedValues) {
+        List<WebElement> elements = driver.findElements(By.className(className));
+        return new WebAssertion(elements);
+    }
+
+    public WebAssertion useJSExecutorForAssertion(String script) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        List <WebElement> elements = (List<WebElement>) js.executeScript(script);
+        return new WebAssertion(elements);
     }
 
 }
