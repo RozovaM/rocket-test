@@ -264,10 +264,12 @@ public class Web {
     return new CustomWebElement(element, this, driver);
     }
 
-    public WebAssertion useClassNameElementsForAssertion(String className, String ... expectedValues) {
+    public WebAssertion useClassNameElementsForAssertion(String className) {
         List<WebElement> elements = driver.findElements(By.className(className));
         return new WebAssertion(elements);
     }
+
+
 
     public WebAssertion useJSExecutorForAssertion(String script) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
