@@ -5,16 +5,11 @@ import core.modules.library.models.Config;
 import core.modules.database.services.DbPrecondition;
 import core.modules.library.models.SshClient;
 import core.modules.mobile.services.Mobile;
-import core.modules.web.models.WebDriverFactory;
-import org.openqa.selenium.WebDriver;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import java.util.ArrayList;
 
 @Configuration
-@ComponentScan(basePackages = {"core"})
 @Lazy
 public class CoreContext {
     @Bean
@@ -40,10 +35,5 @@ public class CoreContext {
     @Bean
     public Mobile mobile() throws Exception {
         return new Mobile(mobileDriver().driver());
-    }
-
-    @Bean
-    public ArrayList<WebDriver> webDrivers() {
-        return new WebDriverFactory(config()).webDrivers();
     }
 }

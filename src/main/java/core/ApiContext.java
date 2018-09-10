@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpHeaders;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import java.util.prefs.Preferences;
 
@@ -37,8 +36,14 @@ public class ApiContext
 
     @Autowired
     JsonClient jsonClient;
+
     @Autowired
     Config config;
+
+    @Bean
+    public Config apiConfig() {
+        return new Config("api.ini");
+    }
 
     @Bean
     public EndpointService restApiSimple(){
@@ -52,7 +57,7 @@ public class ApiContext
 
     @Bean
     public Verbose verbose() {
-        return new Verbose(config().getPreference().node("General").getBoolean("debug", false));
+        return new Verbose(config.getPreference().node("General").getBoolean("debug", false));
     }
 
     @Bean
@@ -62,20 +67,20 @@ public class ApiContext
 
     @Bean
     public CustomizedEndpointService restApi(){
-        return new CustomizedEndpointService(httpRequestService, defaultRestApiHttpRequest, jsonClient, config);
+        return new CustomizedEndpointService(httpRequestService, defaultRestApiHttpRequest, jsonClient, apiConfig());
     }
 
     @Bean
     public AuthStringGenerator basicAuthStringGenerator()
     {
-        Preferences config = config().getPreference().node("RestApiBasicAuth");
+        Preferences config = apiConfig().getPreference().node("RestApiBasicAuth");
         return new BasicAuthStringGenerator(config);
     }
 
     @Bean
     public AuthStringGenerator basicAuthForOAuth2StringGenerator()
     {
-        Preferences config = config().getPreference().node("OAuth2");
+        Preferences config = apiConfig().getPreference().node("OAuth2");
         return new BasicAuthStringGenerator(config);
     }
 
@@ -86,7 +91,7 @@ public class ApiContext
                 httpRequestService(),
                 restApiHttpRequestForHttpAuthorization(),
                 new JsonClient(),
-                config.getPreference().node("OAuth2").get("uri", "")
+                apiConfig().getPreference().node("OAuth2").get("uri", "")
         );
     }
 
@@ -114,7 +119,7 @@ public class ApiContext
     public HttpRequest defaultRestApiHttpRequest()
     {
         return (new DefaultRequestBuilder()).build(
-                config().getPreference().node("Api").get("baseUrl", ""),
+                apiConfig().getPreference().node("Api").get("baseUrl", ""),
                 defaultRestApiHttpHeaders()
         );
     }
@@ -124,7 +129,7 @@ public class ApiContext
     public HttpRequest defaultRestApiHttpRequestBasicAuth()
     {
         return (new DefaultRequestBuilder()).build(
-                config().getPreference().node("Api").get("baseUrl", ""),
+                apiConfig().getPreference().node("Api").get("baseUrl", ""),
                 defaultRestApiHttpHeadersWithBasicAuth()
         );
     }
@@ -139,7 +144,7 @@ public class ApiContext
         httpHeaders.add("Authorization", oAuth2StringGenerator().generate());
 
         return (new DefaultRequestBuilder()).build(
-                config().getPreference().node("Api").get("baseUrl", ""),
+                apiConfig().getPreference().node("Api").get("baseUrl", ""),
                 httpHeaders
         );
     }
@@ -154,7 +159,7 @@ public class ApiContext
         httpHeaders.add("Authorization", basicAuthForOAuth2StringGenerator().generate());
 
         return (new DefaultRequestBuilder()).build(
-                config().getPreference().node("Api").get("baseUrl", ""),
+                apiConfig().getPreference().node("Api").get("baseUrl", ""),
                 httpHeaders
         );
     }
@@ -163,23 +168,5 @@ public class ApiContext
     public HttpRequestService httpRequestService()
     {
         return new HttpRequestService(verbose());
-    }
-
-    //-------------------End HttpHeaders------------------------
-
-    @Bean
-    public Config config() {
-        return new Config("config.ini");
-    }
-
-    @Bean
-    public Preferences generalConfig() {
-        return config().getPreference().node("General");
-    }
-
-    @Bean
-    public DriverManagerDataSource driverManagerDataSource () {
-        Preferences config = generalConfig();
-        return new DriverManagerDataSource(config.get("dbUrl", ""), config.get("dbUser", ""), config.get("dbPassword", ""));
     }
 }
