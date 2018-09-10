@@ -23,6 +23,7 @@ public class Web {
     }
 
     public Web open() {
+        driver.navigate().refresh();
         driver.get(baseAdminUrl);
         return this;
     }
