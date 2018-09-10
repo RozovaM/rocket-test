@@ -1,7 +1,6 @@
 package core.service;
 
-import core.CoreContext;
-
+import core.MobileContext;
 import core.modules.mobile.models.MobileDriver;
 import core.modules.mobile.services.Mobile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterClass;
 
-@ContextConfiguration(classes = {CoreContext.class}, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = {MobileContext.class}, loader = AnnotationConfigContextLoader.class)
 public class MobileTest extends AbstractTestNGSpringContextTests {
 
     private Mobile mobile;
