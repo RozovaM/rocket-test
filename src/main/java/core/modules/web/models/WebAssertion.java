@@ -39,9 +39,13 @@ public class WebAssertion {
             Assert.assertFalse(elementForAssert.isSelected(), "Element is selected");
         }
     }
-    
+
     public void labelListShouldContainText (String ... expectedText) {
         checkTextListForEqual(expectedText);
+    }
+
+    public void fieldShouldContainText (String attributeName, String ... expectedText) {
+        checkAttributeValueTextForEqual (attributeName, expectedText);
     }
 
     public void attributeValueListShouldContainText (String attributeName, String ... expectedText) {
