@@ -33,9 +33,13 @@ public class WebAssertion {
     }
 
     public void shouldBeSelected(boolean condition) {
-        Assert.assertTrue(elementForAssert.isSelected(), "Element is not selected");
+        if(condition){
+            Assert.assertTrue(elementForAssert.isSelected(), "Element is not selected");
+        } else {
+            Assert.assertFalse(elementForAssert.isSelected(), "Element is selected");
+        }
     }
-
+    
     public void labelListShouldContainText (String ... expectedText) {
         checkTextListForEqual(expectedText);
     }
