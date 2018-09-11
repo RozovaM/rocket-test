@@ -83,6 +83,11 @@ public class Web {
         return this;
     }
 
+    public WebAssertion useXpathElementsForAssertion(String xpath) {
+        List<WebElement> elements = driver.findElements(By.xpath(xpath));
+        return new WebAssertion(elements);
+    }
+
     public CustomWebElement useElementByCss(String css) {
         WebElement element = findElementByCss(css);
         return new CustomWebElement (element,this, driver);
