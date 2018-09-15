@@ -288,6 +288,17 @@ public class Web {
         softAssert.assertAll();
     }
 
+    public Web useJavaScriptAnd(String xpath, String script) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        if (xpath!=null){
+            WebElement element =  driver.findElement(By.xpath(xpath));
+            js.executeScript(script,element);
+        } else {
+            js.executeScript(script);
+        }
+        return this;
+    }
+
     public WebAssertion useJSExecutorForAssertion(String script) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         List <WebElement> elements = (List<WebElement>) js.executeScript(script);
