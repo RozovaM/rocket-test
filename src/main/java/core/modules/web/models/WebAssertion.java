@@ -2,6 +2,7 @@ package core.modules.web.models;
 
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +27,18 @@ public class WebAssertion {
 
     public void shouldBeDisplayed(boolean condition) {
         Assert.assertTrue(elementForAssert.isDisplayed(), "Element is not displayed");
+    }
+
+    public void elementListShouldBeDisplayed(boolean condition) {
+        SoftAssert softAssert = new SoftAssert();
+        for (WebElement element : elementListForAssert) {
+            if(condition){
+                softAssert.assertTrue(element.isDisplayed(), "Element " + element.toString() + " is not displayed");
+            } else {
+                softAssert.assertFalse(element.isDisplayed(), "Element " + element.toString() + " is displayed");
+            }
+        }
+        softAssert.assertAll();
     }
 
      public void shouldBeImage(boolean condition) throws Exception{

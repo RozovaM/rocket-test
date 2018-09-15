@@ -4,6 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
@@ -275,6 +276,17 @@ public class Web {
     }
 
 
+    public void useXpathListForSoftAssertion(String ... xpathList){
+        SoftAssert softAssert = new SoftAssert();
+        for (String xpath : xpathList ){
+            try {
+                driver.findElement(By.xpath(xpath));
+            } catch (Exception e) {
+                softAssert.fail( "Element with xpath + " + xpath + "not found");
+            }
+        }
+        softAssert.assertAll();
+    }
 
     public WebAssertion useJSExecutorForAssertion(String script) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
