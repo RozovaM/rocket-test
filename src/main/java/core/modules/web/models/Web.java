@@ -124,6 +124,8 @@ public class Web {
 
     public CustomWebElement typeTextToInputFieldXpath(String xpath, String value) {
         WebElement element = findElementByXpath(xpath);
+        element.sendKeys(Keys.CONTROL + "a");
+        element.sendKeys(Keys.DELETE);
         element.sendKeys(value);
     return new CustomWebElement(element, this, driver);
     }
