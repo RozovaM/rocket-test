@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Web {
@@ -303,6 +304,15 @@ public class Web {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         List <WebElement> elements = (List<WebElement>) js.executeScript(script);
         return new WebAssertion(elements);
+    }
+
+    public WebAssertion useXpathList (String ... xpathList){
+        List<WebElement> elementList = new ArrayList<>();
+        for (String xpath : xpathList) {
+            WebElement element =  findElementByXpath(xpath);
+            elementList.add(element);
+        }
+        return new WebAssertion(elementList);
     }
 
 }
