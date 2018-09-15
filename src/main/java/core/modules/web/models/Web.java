@@ -153,6 +153,7 @@ public class Web {
 
     public Web pressEnterUsingXpathAnd(String xpath) {
         WebElement element = findElementByXpath(xpath);
+        element.sendKeys(Keys.ENTER);
         return this;
     }
 
