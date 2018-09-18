@@ -1,10 +1,7 @@
 package core.service;
 
-import core.ApiContext;
-import core.CoreContext;
-import core.DatabaseContext;
+
 import core.WebContext;
-import core.modules.database.services.Database;
 import core.modules.library.models.Config;
 import core.modules.web.models.Web;
 import core.modules.web.models.WebDriverFactory;
@@ -13,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.DataProvider;
 
 import java.util.ArrayList;
@@ -50,7 +47,7 @@ public class WebTest extends AbstractTestNGSpringContextTests {
         return new Web(config.getPreference().node("Web").get("baseUrl", ""), webDrivers.get(0));
     }
 
-    @AfterClass
+    @AfterSuite(alwaysRun = true)
     public void closeBrowserInstance() {
         for (WebDriver webDriver: webDrivers){
             if (webDriver != null) {
