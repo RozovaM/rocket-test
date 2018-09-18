@@ -1,6 +1,7 @@
 package core.modules.web.models;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.logging.Logs;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -316,6 +317,11 @@ public class Web {
             elementList.add(element);
         }
         return new WebAssertion(elementList);
+    }
+
+    public WebAssertion useBrowserLogForAssertion(String ... params){
+        Logs logs = driver.manage().logs();
+        return new WebAssertion(logs, params);
     }
 
 }

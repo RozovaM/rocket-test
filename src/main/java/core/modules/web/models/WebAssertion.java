@@ -1,16 +1,28 @@
 package core.modules.web.models;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.Logs;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class WebAssertion {
 
     private WebElement elementForAssert;
     private List<WebElement> elementListForAssert;
+    private Logs logs;
+    private String [] params;
 
     public WebAssertion(WebElement elementForAssert) {
         this.elementForAssert = elementForAssert;
@@ -18,6 +30,11 @@ public class WebAssertion {
 
     public WebAssertion(List<WebElement> elementListForAssert) {
         this.elementListForAssert = elementListForAssert;
+    }
+
+    public WebAssertion(Logs logs, String[] params) {
+        this.logs = logs;
+        this.params = params;
     }
 
     public void shouldBeEnabled(boolean condition) throws Exception {
@@ -62,6 +79,28 @@ public class WebAssertion {
 
     public void fieldShouldContainText (String attributeName, Object value) {
         checkAttributeValueTextForEqual (attributeName, value);
+    }
+
+    public void urlShouldContainValues (String ... expectedValues){
+        String browserLog = getBrowserLogs();
+        System.out.println(browserLog);
+        List<String> actualValuesList  = new ArrayList<>();
+        List<String> expectedParamsList = convertToLowerCase(new ArrayList<>(Arrays.asList((String[]) expectedValues)));
+        List<String> paramList = new ArrayList<>(Arrays.asList((String[]) params));
+        for (String  parameter : paramList) {
+            Pattern pattern = Pattern.compile("(?<=" + parameter + "=)(.*?)(?=&)");
+            Matcher matcher = pattern.matcher(browserLog);
+            while (matcher.find()) {
+                actualValuesList.add(matcher.group().toLowerCase());
+            }
+        }
+
+        List<String> sourceList = new ArrayList<String>(expectedParamsList);
+        List<String> destinationList = new ArrayList<String>(actualValuesList);
+        sourceList.removeAll(actualValuesList);
+        destinationList.removeAll(expectedParamsList);
+
+        Assert.assertEquals(actualValuesList.toString(), expectedParamsList.toString(), "Values" + sourceList.toString() + " are not present in url");
     }
 
     private void checkTextListForEqual (Object value) {
@@ -118,5 +157,22 @@ public class WebAssertion {
             lowerCaseList.add(value.toLowerCase());
         }
         return lowerCaseList;
+    }
+
+    private String getBrowserLogs () {
+        LogEntries logEntries = logs.get(LogType.BROWSER);
+        logEntries.filter(Level.INFO);
+        StringBuilder sb = new StringBuilder();
+
+        for (LogEntry logEntry : logEntries) {
+            logEntry.getMessage();
+            sb.append(logEntry.getMessage());
+            System.out.println(logEntry.getMessage());
+        }
+        try {
+            return URLDecoder.decode(sb.toString(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return e.getMessage();
+        }
     }
 }
