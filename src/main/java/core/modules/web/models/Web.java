@@ -15,6 +15,7 @@ public class Web {
     private WebDriver driver;
     private String baseAdminUrl;
 
+    //TODO: use autowiring for driver
     public Web(String baseAdminUrl, WebDriver browserDriver) {
         this.baseAdminUrl = baseAdminUrl;
         this.driver = browserDriver;
@@ -36,6 +37,7 @@ public class Web {
         return this;
     }
 
+    //TODO: code duplication. Follow DRY principle
     public WebElement findElementByXpath(String xpath){
         try {
             return driver.findElement(By.xpath(xpath));

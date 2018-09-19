@@ -8,6 +8,7 @@ public class WebAction {
 
     WebDriver driver;
 
+    //TODO: use autowiring for driver
     public WebAction(WebDriver driver) {
         this.driver = driver;
     }

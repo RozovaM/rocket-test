@@ -38,7 +38,6 @@ public class CustomWebElement {
         return web;
     }
 
-
     public Web clickAnd() {
         element.click();
         try {
@@ -55,7 +54,6 @@ public class CustomWebElement {
         }
         return web;
     }
-
 
     public WebAction useElementByCss(String css) {
         element = driver.findElement(By.cssSelector(css));

@@ -48,9 +48,9 @@ public class WebAssertion {
     public void shouldBeDisplayed(boolean condition) {
         if (condition) {
             Assert.assertTrue(elementForAssert.isDisplayed(), "Element " + elementForAssert.toString() + " is not displayed");
-        } else {
-            Assert.assertFalse(elementForAssert.isDisplayed(), "Element " + elementForAssert.toString() + " is displayed");
+            return;
         }
+        Assert.assertFalse(elementForAssert.isDisplayed(), "Element " + elementForAssert.toString() + " is displayed");
     }
 
     public void elementListShouldBeDisplayed(boolean condition) {
@@ -58,9 +58,9 @@ public class WebAssertion {
         for (WebElement element : elementListForAssert) {
             if (condition) {
                 softAssert.assertTrue(element.isDisplayed(), "Element " + element.toString() + " is not displayed");
-            } else {
-                softAssert.assertFalse(element.isDisplayed(), "Element " + element.toString() + " is displayed");
+                return;
             }
+            softAssert.assertFalse(element.isDisplayed(), "Element " + element.toString() + " is displayed");
         }
         softAssert.assertAll();
     }
@@ -72,11 +72,11 @@ public class WebAssertion {
     public void shouldBeSelected(boolean condition) {
         if (condition) {
             Assert.assertTrue(elementForAssert.isSelected(), "Element " + elementForAssert.toString() + " is not selected");
-        } else {
-            Assert.assertFalse(elementForAssert.isSelected(), "Element " + elementForAssert.toString() + " is selected");
+            return;
         }
+        Assert.assertFalse(elementForAssert.isSelected(), "Element " + elementForAssert.toString() + " is selected");
     }
-
+    
     public void elementListShouldContainText(String... expectedText) {
         checkTextListForEqual(expectedText);
     }
