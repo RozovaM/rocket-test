@@ -319,9 +319,9 @@ public class Web {
         return new WebAssertion(elementList);
     }
 
-    public WebAssertion useBrowserLogForAssertion(String ... params){
-        Logs logs = driver.manage().logs();
-        return new WebAssertion(logs, params);
+    public WebAssertion useUrlForAssertion(String ... params){
+        String url = driver.getCurrentUrl();
+        return new WebAssertion(url, params);
     }
 
 }

@@ -21,8 +21,8 @@ public class WebAssertion {
 
     private WebElement elementForAssert;
     private List<WebElement> elementListForAssert;
-    private Logs logs;
-    private String [] params;
+    private String url;
+    private String[] params;
 
     public WebAssertion(WebElement elementForAssert) {
         this.elementForAssert = elementForAssert;
@@ -32,8 +32,12 @@ public class WebAssertion {
         this.elementListForAssert = elementListForAssert;
     }
 
-    public WebAssertion(Logs logs, String[] params) {
-        this.logs = logs;
+    public WebAssertion(String url, String[] params) {
+        try {
+            this.url = URLDecoder.decode(url, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         this.params = params;
     }
 
@@ -77,19 +81,19 @@ public class WebAssertion {
         checkTextListForEqual(expectedText);
     }
 
-    public void fieldShouldContainText (String attributeName, Object value) {
-        checkAttributeValueTextForEqual (attributeName, value);
+    public void fieldShouldContainText(String attributeName, Object value) {
+        checkAttributeValueTextForEqual(attributeName, value);
     }
 
-    public void urlShouldContainValues (String ... expectedValues){
-        String browserLog = getBrowserLogs();
-        System.out.println(browserLog);
-        List<String> actualValuesList  = new ArrayList<>();
+    public void urlShouldContainValues(String... expectedValues) {
+        System.out.println(url);
+
+        List<String> actualValuesList = new ArrayList<>();
         List<String> expectedParamsList = convertToLowerCase(new ArrayList<>(Arrays.asList((String[]) expectedValues)));
         List<String> paramList = new ArrayList<>(Arrays.asList((String[]) params));
-        for (String  parameter : paramList) {
+        for (String parameter : paramList) {
             Pattern pattern = Pattern.compile("(?<=" + parameter + "=)(.*?)(?=&)");
-            Matcher matcher = pattern.matcher(browserLog);
+            Matcher matcher = pattern.matcher(url);
             while (matcher.find()) {
                 actualValuesList.add(matcher.group().toLowerCase());
             }
@@ -103,7 +107,7 @@ public class WebAssertion {
         Assert.assertEquals(actualValuesList.toString(), expectedParamsList.toString(), "Values" + sourceList.toString() + " are not present in url");
     }
 
-    private void checkTextListForEqual (Object value) {
+    private void checkTextListForEqual(Object value) {
         if (value instanceof String) {
             String actualValue = elementForAssert.getText().toLowerCase().trim();
             String expectedValue = ((String) value).toLowerCase().trim();
@@ -129,14 +133,14 @@ public class WebAssertion {
         }
     }
 
-    private void checkAttributeValueTextForEqual (String attributeName, Object value) {
-        if (value instanceof String){
+    private void checkAttributeValueTextForEqual(String attributeName, Object value) {
+        if (value instanceof String) {
             String actualValue = elementForAssert.getAttribute(attributeName).toLowerCase().trim();
             String expectedValue = ((String) value).toLowerCase();
             Assert.assertEquals(actualValue, expectedValue, "Text " + actualValue + " is not present");
-        } else if (value instanceof String []){
+        } else if (value instanceof String[]) {
             ArrayList<String> actualValueList = new ArrayList<>();
-            ArrayList<String> expectedValues = convertToLowerCase(new ArrayList<>(Arrays.asList((String [])value)));
+            ArrayList<String> expectedValues = convertToLowerCase(new ArrayList<>(Arrays.asList((String[]) value)));
 
             for (WebElement elemnent : elementListForAssert) {
                 String label = elemnent.getAttribute(attributeName).toLowerCase();
@@ -151,28 +155,11 @@ public class WebAssertion {
         }
     }
 
-    private ArrayList<String> convertToLowerCase (ArrayList<String> list) {
-        ArrayList<String> lowerCaseList  = new ArrayList<>();
+    private ArrayList<String> convertToLowerCase(ArrayList<String> list) {
+        ArrayList<String> lowerCaseList = new ArrayList<>();
         for (String value : list) {
             lowerCaseList.add(value.toLowerCase());
         }
         return lowerCaseList;
-    }
-
-    private String getBrowserLogs () {
-        LogEntries logEntries = logs.get(LogType.BROWSER);
-        logEntries.filter(Level.INFO);
-        StringBuilder sb = new StringBuilder();
-
-        for (LogEntry logEntry : logEntries) {
-            logEntry.getMessage();
-            sb.append(logEntry.getMessage());
-            System.out.println(logEntry.getMessage());
-        }
-        try {
-            return URLDecoder.decode(sb.toString(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            return e.getMessage();
-        }
     }
 }
