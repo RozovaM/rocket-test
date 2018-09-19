@@ -44,3 +44,7 @@ config/config.ini
 # ----
 /*.log
 
+/config/api.ini
+/config/db.ini
+/config/mobile.ini
+/config/web.ini

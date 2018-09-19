@@ -44,7 +44,6 @@ configurations {
 
 dependencies {
     compile group: 'org.testng', name: 'testng', version: '6.11'
-    compile group: 'com.codeborne', name: 'selenide', version: '4.8'
     compile group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '1.7.1'
     compile group: 'com.jcraft', name: 'jsch', version: '0.1.54'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'

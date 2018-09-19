@@ -1,72 +1,76 @@
 package core.modules.web.models;
 
-import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-
-import static com.codeborne.selenide.Selenide.$;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class WebAction {
 
+    WebDriver driver;
+
+    //TODO: use autowiring for driver
+    public WebAction(WebDriver driver) {
+        this.driver = driver;
+    }
+
     public WebAssertion useCssElementForAssertion(String css) {
-        SelenideElement element = $(By.cssSelector(css));
+        WebElement element = driver.findElement(By.cssSelector(css));
         return new WebAssertion(element);
     }
 
     public WebAction useCssElementForAssertionAnd(String css) {
-        SelenideElement element = $(By.cssSelector(css));
+        WebElement element = driver.findElement(By.cssSelector(css));
         return this;
     }
 
     public WebAssertion useXpathElementForAssertion(String xpath) {
-        SelenideElement element = $(By.xpath(xpath));
+        WebElement element = driver.findElement(By.xpath(xpath));
         return new WebAssertion(element);
     }
 
     public WebAction useXpathElementForAssertionAnd(String xpath) {
-        SelenideElement element = $(By.xpath(xpath));
+        WebElement element = driver.findElement(By.xpath(xpath));
         return this;
     }
 
     public WebAssertion useCssElementForSelectDropdown(String css) {
-        SelenideElement element = $(By.cssSelector(css));
+        WebElement element = driver.findElement(By.cssSelector(css));
         return new WebAssertion(element);
     }
 
     public WebAction useCssElementForSelectDropdownAnd(String css) {
-        SelenideElement element = $(By.cssSelector(css));
+        WebElement element = driver.findElement(By.cssSelector(css));
         return this;
     }
 
 
     public WebAssertion useXpathElementForSelectDropdown(String xpath) {
-        SelenideElement element = $(By.xpath(xpath));
+        WebElement element = driver.findElement(By.xpath(xpath));
         return new WebAssertion(element);
     }
 
     public WebAction useXpathElementForSelectDropdownAnd(String xpath) {
-        SelenideElement element = $(By.xpath(xpath));
+        WebElement element = driver.findElement(By.xpath(xpath));
         return this;
     }
 
     public WebAssertion useElementByCss(String css) {
-        SelenideElement element = $(By.cssSelector(css));
+        WebElement element = driver.findElement(By.cssSelector(css));
         return new WebAssertion(element);
     }
 
-
     public WebAction useElementByCssAnd(String css) {
-        SelenideElement element = $(By.cssSelector(css));
+        WebElement element = driver.findElement(By.cssSelector(css));
         return this;
     }
 
     public WebAssertion useElementByXpath(String xpath) {
-        SelenideElement element = $(By.xpath(xpath));
+        WebElement element = driver.findElement(By.xpath(xpath));
         return new WebAssertion(element);
     }
 
-
     public WebAction useElementByXpathAnd(String xpath) {
-        SelenideElement element = $(By.xpath(xpath));
+        WebElement element = driver.findElement(By.xpath(xpath));
         return this;
     }
 }
