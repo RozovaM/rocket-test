@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class WebTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
-    private Config config;
+    private Config webConfig;
 
     @Autowired
     private ArrayList<WebDriver> webDrivers;
@@ -43,12 +43,13 @@ public class WebTest extends AbstractTestNGSpringContextTests {
 
     public Web web(Integer driverNumber) {
         this.driverNumber = driverNumber;
-        return new Web(config.getPreference().node("Web").get("baseUrl", ""), webDrivers.get(driverNumber));
+        return new Web(webConfig.getPreference().node("Web").get("baseUrl", ""), webDrivers.get(driverNumber));
     }
 
     public Web web() {
         this.driverNumber = 0;
-        return new Web(config.getPreference().node("Web").get("baseUrl", ""), webDrivers.get(0));
+
+        return new Web(webConfig.getPreference().node("Web").get("baseUrl", ""), webDrivers.get(0));
     }
 
     @BeforeMethod
