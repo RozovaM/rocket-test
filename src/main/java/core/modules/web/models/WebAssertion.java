@@ -76,7 +76,7 @@ public class WebAssertion {
         }
         Assert.assertFalse(elementForAssert.isSelected(), "Element " + elementForAssert.toString() + " is selected");
     }
-    
+
     public void elementListShouldContainText(String... expectedText) {
         checkTextListForEqual(expectedText);
     }
@@ -87,26 +87,19 @@ public class WebAssertion {
 
     public void urlShouldContainValues(String... expectedValues) {
         System.out.println(url);
-
-        List<String> actualValuesList = new ArrayList<>();
-        List<String> expectedParamsList = convertToLowerCase(new ArrayList<>(Arrays.asList((String[]) expectedValues)));
+        List<String> expectedValueList = convertToLowerCase(new ArrayList<>(Arrays.asList((String[]) expectedValues)));
         List<String> paramList = new ArrayList<>(Arrays.asList((String[]) params));
-        for (String parameter : paramList) {
-            Pattern pattern = Pattern.compile("(?<=" + parameter + "=)(.*?)(?=&)");
-            Matcher matcher = pattern.matcher(url);
-            while (matcher.find()) {
-                actualValuesList.add(matcher.group().toLowerCase());
-            }
-        }
+        List<String> actualValueList = getUrlValues(paramList);
 
-        List<String> sourceList = new ArrayList<String>(expectedParamsList);
-        List<String> destinationList = new ArrayList<String>(actualValuesList);
-        sourceList.removeAll(actualValuesList);
-        destinationList.removeAll(expectedParamsList);
+        List<String> sourceList = new ArrayList<String>(expectedValueList);
+        List<String> destinationList = new ArrayList<String>(actualValueList);
+        sourceList.removeAll(actualValueList);
+        destinationList.removeAll(expectedValueList);
 
-        Assert.assertEquals(actualValuesList.toString(), expectedParamsList.toString(), "Values" + sourceList.toString() + " are not present in url");
+        Assert.assertEquals(actualValueList.toString(), expectedValueList.toString(), "Values" + sourceList.toString() + " are not present in url");
     }
 
+    //TODO: reduce the method by extracting code in other method
     private void checkTextListForEqual(Object value) {
         if (value instanceof String) {
             String actualValue = elementForAssert.getText().toLowerCase().trim();
@@ -133,6 +126,7 @@ public class WebAssertion {
         }
     }
 
+    //TODO: reduce the method by extracting code in other method
     private void checkAttributeValueTextForEqual(String attributeName, Object value) {
         if (value instanceof String) {
             String actualValue = elementForAssert.getAttribute(attributeName).toLowerCase().trim();
@@ -161,5 +155,17 @@ public class WebAssertion {
             lowerCaseList.add(value.toLowerCase());
         }
         return lowerCaseList;
+    }
+
+    private List<String> getUrlValues(List<String> paramList) {
+        List<String> actualValuesList = new ArrayList<>();
+        for (String parameter : paramList) {
+            Pattern pattern = Pattern.compile("(?<=" + parameter + "=)(.*?)(?=&)");
+            Matcher matcher = pattern.matcher(url);
+            while (matcher.find()) {
+                actualValuesList.add(matcher.group().toLowerCase());
+            }
+        }
+        return actualValuesList;
     }
 }
