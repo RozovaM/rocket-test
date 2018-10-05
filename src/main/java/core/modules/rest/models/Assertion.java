@@ -111,6 +111,15 @@ public class Assertion
         return this;
     }
 
+    //TODO: need to be reworked
+    public Assertion jsonResponseContainsDataInArray(Map<String, String> data, String field)
+    {
+        if (!isDataInArray(data, field)){
+            Assert.fail("There isn't data in response");
+        }
+        return this;
+    }
+
     public Assertion jsonResponseContainsDataInCollection(Map<String, String> data)
     {
         if (!isDataInCollection(data)){
@@ -229,6 +238,28 @@ public class Assertion
         }
 
         ArrayNode itemsNode = (ArrayNode) responseNode.get("items");
+        Iterator<JsonNode> itemsIterator = itemsNode.elements();
+        while (itemsIterator.hasNext()) {
+            JsonNode itemNode = itemsIterator.next();
+            if (checkCollectionElement(data, itemNode)) {
+                issetElement = true;
+                break;
+            }
+        }
+        return issetElement;
+    }
+
+    //TODO: need to be reworked
+    private Boolean isDataInArray (Map<String, String> data, String field) {
+
+        JsonNode responseNode = getJsonBody();
+        Boolean issetElement = false;
+
+        if (!responseNode.has(field)){
+            Assert.fail("Response json doesn't contain field: " + field);
+        }
+
+        ArrayNode itemsNode = (ArrayNode) responseNode.get(field);
         Iterator<JsonNode> itemsIterator = itemsNode.elements();
         while (itemsIterator.hasNext()) {
             JsonNode itemNode = itemsIterator.next();
