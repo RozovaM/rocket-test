@@ -58,7 +58,7 @@ public class DbDump {
     }
 
     /**
-     * Install mysql client for Windows and add to PATH folder with mysql.exe
+     * Install mysql client for Windows and add to PATH system env variable path to folder with mysql.exe
      * @return List<String>
      */
     private List<String> windowsCommandShellParams()
