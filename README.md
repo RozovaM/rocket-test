@@ -30,5 +30,11 @@
 git clone ${repository_url}
 5. Once the project is cloned successfully, open the terminal and navigate to the project root directory.
 6. And run the following command to start the tests:
+ -  ./gradlew test
+ 
+## Windows:
+To run mysql dump successfully install mysql client.
+
+Add to PATH env variable path to mysql.exe client folder.
 
  -  ./gradlew test
