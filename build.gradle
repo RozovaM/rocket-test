@@ -1,11 +1,9 @@
 group "rocket-test"
 version "1.0"
 
-
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'maven'
-
 
 sourceCompatibility = 1.8
 
@@ -23,7 +21,6 @@ buildscript {
         classpath "ru.d10xa:gradle-allure-plugin:0.5.5"
     }
 }
-
 
 apply plugin: 'ru.d10xa.allure'
 
