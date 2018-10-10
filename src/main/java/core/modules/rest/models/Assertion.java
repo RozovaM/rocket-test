@@ -111,7 +111,6 @@ public class Assertion
         return this;
     }
 
-    //TODO: need to be reworked
     public Assertion jsonResponseContainsDataInArray(Map<String, String> data, String field)
     {
         if (!isDataInArray(data, field)){
