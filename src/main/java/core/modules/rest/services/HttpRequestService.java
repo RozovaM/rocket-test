@@ -83,6 +83,10 @@ public final class HttpRequestService
                     e.getResponseHeaders()
             );
         }
+        //TODO: look into appropriate solution
+        if (httpMethod.matches("DELETE")){
+            createRestTemplate();
+        }
 
         verbose.testInfo("Response", response.toString());
 

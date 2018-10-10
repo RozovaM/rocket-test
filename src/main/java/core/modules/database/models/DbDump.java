@@ -47,7 +47,6 @@ public class DbDump {
             params.add("-c");
             params.add("mysql -u" + dbUser + " -p" + dbPassword +
                     " -h" + host + " --port=" + port + " " + dbName + " < " + "db/" + dump);
-
             ProcessBuilder pb = new ProcessBuilder(params);
             Process p = pb.redirectErrorStream(true).start();
             p.waitFor();
