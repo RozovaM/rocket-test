@@ -111,6 +111,14 @@ public class Assertion
         return this;
     }
 
+    public Assertion jsonResponseContainsDataInArray(Map<String, String> data, String field)
+    {
+        if (!isDataInArray(data, field)){
+            Assert.fail("There isn't data in response");
+        }
+        return this;
+    }
+
     public Assertion jsonResponseContainsDataInCollection(Map<String, String> data)
     {
         if (!isDataInCollection(data)){
@@ -221,45 +229,12 @@ public class Assertion
 
     private Boolean isDataInCollection(Map<String, String> data)
     {
-        JsonNode responseNode = getJsonBody();
-        Boolean issetElement = false;
-
-        if (!responseNode.has("items")){
-            Assert.fail("Response json doesn't contain field: items");
-        }
-
-        ArrayNode itemsNode = (ArrayNode) responseNode.get("items");
-        Iterator<JsonNode> itemsIterator = itemsNode.elements();
-        while (itemsIterator.hasNext()) {
-            JsonNode itemNode = itemsIterator.next();
-            if (checkCollectionElement(data, itemNode)) {
-                issetElement = true;
-                break;
-            }
-        }
-        return issetElement;
+        return new NestedList().includeElementWith(data, getJsonBody(), "items");
     }
 
-    private boolean checkCollectionElement(Map<String, String> data, JsonNode itemNode)
+    private Boolean isDataInArray (Map<String, String> data, String field)
     {
-        Integer numberOfFields = data.size();
-        Integer numberOfMatches = 0;
-
-        for(Map.Entry<String, String> entry : data.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-
-            if (itemNode.has(key) && itemNode.get(key).asText().equals(value)){
-                numberOfMatches++;
-            }
-
-            if (numberOfMatches == numberOfFields){
-                Assert.assertTrue(true);
-                return true;
-            }
-        }
-
-        return false;
+        return new NestedList().includeElementWith(data, getJsonBody(), field);
     }
 
     private void checkContainsDataEqualValue(Map<String, String> data, JsonNode responseNode)
