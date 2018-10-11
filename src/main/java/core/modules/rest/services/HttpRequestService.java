@@ -88,7 +88,6 @@ public final class HttpRequestService
             createRestTemplate();
         }
 
-        createRestTemplate();
         verbose.testInfo("Response", response.toString());
 
         return response;
