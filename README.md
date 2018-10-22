@@ -31,7 +31,16 @@ git clone ${repository_url}
 5. Once the project is cloned successfully, open the terminal and navigate to the project root directory.
 6. And run the following command to start the tests:
  -  ./gradlew test
- 
+
+## Gradle: Use rocket-test as a dependency for other projects.
+Currently, the rocket-test is not available on remote maven central repository.
+Therefore, need to install the rocket-test in local .m2 repository in order to use the dependency with other project.
+1. Open rocket-test on your machine in IDE (Intellij)
+2. Navigate to Gradle (on right pane) -> Tasks -> other and execute install task.
+3. Open your Gradle Project and reconfigure build.gradle file:
+   - set compile group: 'rocket-test', name: 'rocket-test-core', version: '1.0' dependency in dependency section
+   - set mavenLocal() in repositories section. It allows use the rocket-test dependency from your local maven .m2 repository.
+
 ## Windows:
 To run mysql dump successfully install mysql client.
 
