@@ -23,6 +23,21 @@ public class DatabaseAssert {
     }
 
     public DatabaseAssert seeInTable(String table, HashMap data){
+        if (!isDataInDatabase(table, data)){
+            Assert.fail("Elements are not present in " + table.toUpperCase() + " table");
+        }
+        return this;
+    }
+
+    public DatabaseAssert cantSeeInTable(String table, HashMap data){
+        if (isDataInDatabase(table, data)){
+            Assert.fail("Elements are present in " + table.toUpperCase() + " table");
+        }
+        return this;
+    }
+
+    private boolean isDataInDatabase(String table, HashMap data) {
+        boolean isPresent = false;
 
         String sql = "SELECT count(*) FROM " + table + lightQueryBuilder.buildWhereCondition(data);
         String count = "0";
@@ -34,8 +49,9 @@ public class DatabaseAssert {
             count = row.get("count(*)").toString();
         }
 
-        Assert.assertTrue(Integer.parseInt(count) > 0, "There aren't such elements in database");
+        if(Integer.parseInt(count) > 0)
+            isPresent = true;
 
-        return this;
+        return isPresent;
     }
 }
