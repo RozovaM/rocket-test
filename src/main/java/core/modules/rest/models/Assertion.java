@@ -119,6 +119,14 @@ public class Assertion
         return this;
     }
 
+    public Assertion jsonResponseDoesntContainDataInArray(Map<String, String> data, String field)
+    {
+        if (isDataInArray(data, field)){
+            Assert.fail("The data is still present in response");
+        }
+        return this;
+    }
+
     public Assertion jsonResponseContainsDataInCollection(Map<String, String> data)
     {
         if (!isDataInCollection(data)){
