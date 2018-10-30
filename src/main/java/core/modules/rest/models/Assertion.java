@@ -189,6 +189,12 @@ public class Assertion
         return this;
     }
 
+    public  Assertion jsonResponseContainsSortedDataInCollection(List sortedList, String fieldName){
+        if(!isDataSortedInCollection(sortedList, fieldName)){
+            Assert.fail("Items are not sorted correctly by " + fieldName);
+        }
+        return this;
+    }
 
     public Assertion jsonResponseDoesntContainField(String filedName)
     {
@@ -232,6 +238,34 @@ public class Assertion
             JsonNode itemNode = itemsIterator.next();
             checkContainsFields(listOfFields, itemNode);
         }
+        return true;
+    }
+
+    private Boolean isDataSortedInCollection(List sortedList, String fieldName) {
+        ArrayNode itemsNode = (ArrayNode) getJsonBody().get("items");
+        Iterator<JsonNode> itemsIterator = itemsNode.elements();
+
+        if(itemsNode.size()!= sortedList.size()){
+            Assert.fail("Size of item collection does not match with size of expected test array ");
+        }
+
+        while (itemsIterator.hasNext()) {
+            JsonNode itemNode = itemsIterator.next();
+            if (!checkForEquals(sortedList, itemNode, fieldName)) {
+                return false;
+            }
+            sortedList.remove(0);
+        }
+        return true;
+    }
+
+    private Boolean checkForEquals( List<Object> sortedList, JsonNode itemNode, String fieldName) {
+
+        String itemNodeValue = itemNode.findValue(fieldName).asText();
+        String expectedValue = sortedList.get(0).toString();
+
+        if (!itemNodeValue.equals(expectedValue))
+            return false;
         return true;
     }
 
