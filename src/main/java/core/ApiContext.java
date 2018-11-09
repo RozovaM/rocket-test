@@ -1,8 +1,10 @@
 package core;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import core.modules.library.models.Verbose;
 import core.modules.rest.builders.DefaultRequestBuilder;
 import core.modules.library.models.Config;
+import core.modules.rest.models.HttpHeadersDecorator;
 import core.modules.rest.models.HttpRequest;
 import core.modules.rest.services.CustomizedEndpointService;
 import core.modules.rest.services.EndpointService;
@@ -98,9 +100,8 @@ public class ApiContext
     @Bean
     @Scope("prototype")
     public HttpHeaders defaultRestApiHttpHeadersWithBasicAuth() {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Content-Type", "application/json");
-        httpHeaders.add("Accept", "*/*");
+        HttpHeaders httpHeaders = new HttpHeadersDecorator()
+                .decorateWithDefaultHeaders(new HttpHeaders(), apiConfig().getPreference());
         httpHeaders.add("Authorization", basicAuthStringGenerator().generate());
         return httpHeaders;
     }
@@ -108,10 +109,8 @@ public class ApiContext
     @Bean
     @Scope("prototype")
     public HttpHeaders defaultRestApiHttpHeaders() {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Content-Type", "application/json");
-        httpHeaders.add("Accept", "*/*");
-        return httpHeaders;
+        return new HttpHeadersDecorator()
+                .decorateWithDefaultHeaders(new HttpHeaders(), apiConfig().getPreference());
     }
 
     @Bean

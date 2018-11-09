@@ -39,7 +39,7 @@ public final class HttpRequestService
     }
 
     private String request(HttpRequest httpRequest) {
-        return  httpRequest.getMethod() + " " + httpRequest.getServer() + httpRequest.getPathUrl() + httpRequest.getBody();
+        return  httpRequest.getHeaders() + "\n" +httpRequest.getMethod() + " " + httpRequest.getServer() + httpRequest.getPathUrl() + httpRequest.getBody();
     }
 
     public Response sendFile(String filePath, HttpRequest httpRequest){
