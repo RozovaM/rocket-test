@@ -12,10 +12,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class WebAssertion {
 
@@ -78,11 +80,13 @@ public class WebAssertion {
     }
 
     public void elementListShouldContainText(String... expectedText) {
-        checkTextListForEqual(expectedText);
+        if(!checkListForEqual(Arrays.asList(expectedText)))
+            Assert.fail("Expected data does not match with actual data");
     }
 
-    public void fieldShouldContainText(String attributeName, Object value) {
-        checkAttributeValueTextForEqual(attributeName, value);
+    public void fieldShouldContainText(String attributeName, String value) {
+        if(!checkAttributeValueTextForEqual(attributeName, value))
+            Assert.fail("Expected data does not match with actual data");
     }
 
     public void urlShouldContainValues(String... expectedValues) {
@@ -99,54 +103,32 @@ public class WebAssertion {
         Assert.assertEquals(actualValueList.toString(), expectedValueList.toString(), "Values" + sourceList.toString() + " are not present in url");
     }
 
-    //TODO: reduce the method by extracting code in other method
-    private void checkTextListForEqual(Object value) {
-        if (value instanceof String) {
-            String actualValue = elementForAssert.getText().toLowerCase().trim();
-            String expectedValue = ((String) value).toLowerCase().trim();
-            Assert.assertEquals(actualValue, expectedValue, "Text " + actualValue + " is not present");
-        } else if (value instanceof String[]) {
-            ArrayList<String> actualValueList = new ArrayList<>();
-            ArrayList<String> expectedValues = convertToLowerCase(new ArrayList<>(Arrays.asList((String[]) value)));
+    private boolean checkListForEqual(List <String> expectedValues){
 
-            for (WebElement element : elementListForAssert) {
-                String label = element.getText().toLowerCase();
-                actualValueList.add(label.toLowerCase());
-            }
+        List<String> actualValuesToLowerCase = getTextFromWebElements()
+                .stream().map(s -> s.toLowerCase().trim()).sorted().collect(Collectors.toList());
+        List<String> expectedValuesToLowerCase = expectedValues
+                .stream().map(s -> s.toLowerCase().trim()).sorted().collect(Collectors.toList());
 
-            List<String> sourceList = new ArrayList<String>(expectedValues);
-            List<String> destinationList = new ArrayList<String>(actualValueList);
-            sourceList.removeAll(actualValueList);
-            destinationList.removeAll(expectedValues);
-
-            System.out.println(actualValueList.toString());
-            System.out.println(expectedValues.toString());
-
-            Assert.assertEquals(actualValueList.toString(), expectedValues.toString(), "Text" + sourceList.toString() + " are not present");
-        }
+        return actualValuesToLowerCase.equals(expectedValuesToLowerCase);
     }
 
-    //TODO: reduce the method by extracting code in other method
-    private void checkAttributeValueTextForEqual(String attributeName, Object value) {
-        if (value instanceof String) {
-            String actualValue = elementForAssert.getAttribute(attributeName).toLowerCase().trim();
-            String expectedValue = ((String) value).toLowerCase();
-            Assert.assertEquals(actualValue, expectedValue, "Text " + actualValue + " is not present");
-        } else if (value instanceof String[]) {
-            ArrayList<String> actualValueList = new ArrayList<>();
-            ArrayList<String> expectedValues = convertToLowerCase(new ArrayList<>(Arrays.asList((String[]) value)));
+    private boolean checkAttributeValueTextForEqual (String attributeName, String expectedValue){
+        return getAttributeValue(attributeName).toLowerCase().trim()
+                .equals(expectedValue.toLowerCase().trim());
+    }
 
-            for (WebElement elemnent : elementListForAssert) {
-                String label = elemnent.getAttribute(attributeName).toLowerCase();
-                actualValueList.add(label.toLowerCase());
-            }
+    private List<String> getTextFromWebElements(){
+        List<String> values = new ArrayList<>();
 
-            List<String> sourceList = new ArrayList<String>(expectedValues);
-            List<String> destinationList = new ArrayList<String>(actualValueList);
-            sourceList.removeAll(actualValueList);
-            destinationList.removeAll(expectedValues);
-            Assert.assertEquals(actualValueList.toString(), expectedValues.toString(), "Text" + sourceList.toString() + " are not present");
+        for (WebElement element : elementListForAssert) {
+            values.add(element.getText());
         }
+        return values;
+    }
+
+    private String getAttributeValue(String attributeName){
+        return elementForAssert.getAttribute(attributeName);
     }
 
     private ArrayList<String> convertToLowerCase(ArrayList<String> list) {
