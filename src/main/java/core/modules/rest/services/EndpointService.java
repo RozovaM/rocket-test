@@ -8,6 +8,9 @@ import core.modules.rest.models.Assertion;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.HttpStatusCodeException;
 
+import java.util.List;
+import java.util.Map;
+
 public class EndpointService
 {
     private HttpRequestService httpRequestService;
@@ -22,7 +25,7 @@ public class EndpointService
 
     public EndpointService addHeader(String name, String value)
     {
-        HttpHeaders httpHeaders = httpRequest.getHeaders();
+        HttpHeaders httpHeaders = copyHttpHeaders();
 
         httpHeaders.remove(name);
         httpHeaders.add(name, value);
@@ -107,5 +110,14 @@ public class EndpointService
     {
         this.jsonClient = jsonClient;
         return this;
+    }
+
+    private HttpHeaders copyHttpHeaders() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        for(Map.Entry<String, List<String>> entry : httpRequest.getHeaders().entrySet()) {
+            httpHeaders.put(entry.getKey(), entry.getValue());
+        }
+        return httpHeaders;
     }
 }
