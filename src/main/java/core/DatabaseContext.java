@@ -1,5 +1,6 @@
 package core;
 
+import core.modules.database.models.DatabaseMetadata;
 import core.modules.library.models.Config;
 import core.modules.database.services.Database;
 import core.modules.database.services.DatabaseAssert;
@@ -65,7 +66,20 @@ public class DatabaseContext {
     }
 
     @Bean
+    public DatabaseMetadata databaseMetadata () {
+        return new DatabaseMetadata(
+                dbConfig().getPreference().node("Db").get("dbName", ""),
+                jdbcTemplate());
+    }
+
+    @Bean
     public Database databaseDriver () {
-        return new Database(databaseAssert(), jdbcTemplate(), lightQueryBuilder(), verbose());
+        return new Database(
+                databaseMetadata(),
+                databaseAssert(),
+                jdbcTemplate(),
+                lightQueryBuilder(),
+                verbose()
+        );
     }
 }
