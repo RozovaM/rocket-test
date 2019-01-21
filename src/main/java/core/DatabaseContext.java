@@ -1,6 +1,7 @@
 package core;
 
 import core.modules.database.models.DatabaseMetadata;
+import core.modules.database.models.SmartRollOut;
 import core.modules.library.models.Config;
 import core.modules.database.services.Database;
 import core.modules.database.services.DatabaseAssert;
@@ -42,6 +43,11 @@ public class DatabaseContext {
     @Bean
     public DbDump dbDump() {
         return new DbDump(dbConfig().getPreference().node("Db"));
+    }
+
+    @Bean
+    public SmartRollOut smartRollOut() {
+        return new SmartRollOut(dbDump());
     }
 
     @Bean
