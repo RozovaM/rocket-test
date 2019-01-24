@@ -4,6 +4,7 @@ import core.modules.database.models.DatabaseMetadata;
 import core.modules.database.models.DbQueryMetadata;
 import core.modules.library.models.Verbose;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -47,6 +48,19 @@ public class Database {
         return this;
     }
 
+    public Integer findElementId(String table, Map<String, String> data){
+        String sql = "SELECT id FROM " + table + lightQueryBuilder.buildWhereCondition(data);
+        Integer id;
+
+        try {
+            id = jdbcTemplate.queryForObject(sql, Integer.class);
+        } catch (EmptyResultDataAccessException e) {
+            id = null;
+        }
+
+        return id;
+    }
+
     public Database haveInTable(DbQueryMetadata dbQueryMetadata){
         String sql = lightQueryBuilder.buildInsert(dbQueryMetadata.getTableName(), dbQueryMetadata.getTableData());
         jdbcTemplate.update(sql);
@@ -87,9 +101,8 @@ public class Database {
         return this;
     }
 
-
-
     public DatabaseAssert assertion() {
         return dbAssert;
     }
+
 }
