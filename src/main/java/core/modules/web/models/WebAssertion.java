@@ -45,6 +45,11 @@ public class WebAssertion {
         throw new Exception("Method isn't support");
     }
 
+    public void shouldContainText(String text) {
+        Assert.assertEquals(text,elementForAssert.getText(), "Element " + elementForAssert.toString() + " doesn't have text" + text);
+
+    }
+
     public void shouldBeDisplayed(boolean condition) {
         if (condition) {
             Assert.assertTrue(elementForAssert.isDisplayed(), "Element " + elementForAssert.toString() + " is not displayed");
